@@ -85,9 +85,9 @@ const MotifSeparator = ({ isNightMode }) => (
   </div>
 );
 
-// Organic/Hand-drawn Mandala - Reduced Opacity
+// Organic/Hand-drawn Mandala - Adjusted Opacity
 const MandalaBg = ({ isNightMode }) => (
-  <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-1000 ${isNightMode ? 'opacity-[0.05]' : 'opacity-[0.1]'}`}>
+  <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-1000 ${isNightMode ? 'opacity-[0.05]' : 'opacity-[0.15]'}`}>
     <svg className={`w-[140vh] h-[140vh] animate-[spin_180s_linear_infinite] ${isNightMode ? 'text-white' : 'text-[#78350F]'}`} viewBox="0 0 200 200">
        <path d="M100 15 Q130 18, 185 100 Q130 182, 100 185 Q70 182, 15 100 Q70 18, 100 15" stroke="currentColor" strokeWidth="0.2" fill="none" opacity="0.3" />
        <circle cx="100" cy="100" r="65" stroke="currentColor" strokeWidth="0.3" fill="none" strokeDasharray="3 6" />
@@ -108,8 +108,9 @@ const MandalaBg = ({ isNightMode }) => (
 const MinimalFrame = ({ isNightMode, scrolled }) => {
   const color = isNightMode ? '#fb923c' : '#D97706';
   const size = scrolled ? "w-24 h-24 opacity-0 scale-95" : "w-24 h-24 md:w-48 md:h-48 opacity-100 scale-100";
+  // Fixed overlap: Changed z-index from z-[45] to z-[5] to sit behind text
   return (
-    <div className={`fixed inset-0 pointer-events-none z-[45] hidden md:block transition-all duration-1000 ease-in-out ${scrolled ? 'pointer-events-none' : ''}`}>
+    <div className={`fixed inset-0 pointer-events-none z-[5] hidden md:block transition-all duration-1000 ease-in-out ${scrolled ? 'pointer-events-none' : ''}`}>
        {[0, 90, 180, 270].map((rot, i) => (
          <svg key={i} className={`absolute ${size} transition-all duration-1000 m-6`} style={{ top: i < 2 ? 0 : 'auto', bottom: i >= 2 ? 0 : 'auto', left: (i === 0 || i === 3) ? 0 : 'auto', right: (i === 1 || i === 2) ? 0 : 'auto', transform: `rotate(${rot}deg)` }} viewBox="0 0 100 100" fill="none" stroke={color} strokeWidth="1.5">
             <path d="M2 100 L 2 40 Q 2 2 40 2 L 100 2" fill="none" strokeLinecap="round" />
@@ -289,7 +290,6 @@ const App = () => {
         </div>
       )}
 
-      {/* Increased Z-Index to 50 to ensure clickability above the frames */}
       <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? (isNightMode ? 'bg-[#0B1221]/95 border-[#1e293b]' : 'bg-[#FDFBF7]/95 border-[#e7e5e4]') + ' backdrop-blur-md py-4 border-b' : 'py-8'}`}>
         <div className="container mx-auto px-8 flex justify-between items-center">
           <span onClick={() => scrollTo('home')} className="text-xl tracking-[0.2em] font-base-${lang} font-bold cursor-pointer uppercase">AISHWARYA<span className="text-[#D97706]">.</span></span>
@@ -300,7 +300,6 @@ const App = () => {
                </button>
                <button onClick={() => setIsNightMode(!isNightMode)} className={`p-2 hover:text-[#D97706] transition-colors ${isNightMode ? 'text-indigo-300' : 'text-stone-600'}`}>{isNightMode ? <Sun size={20}/> : <Moon size={20}/>}</button>
             </div>
-            {/* Added cursor-pointer explicit just in case */}
             <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="flex items-center gap-3 text-xs font-bold uppercase hover:text-[#D97706] cursor-pointer"><span>{t.menu}</span><Menu size={24} /></button>
           </div>
         </div>
