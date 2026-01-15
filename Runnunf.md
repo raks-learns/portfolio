@@ -52,7 +52,8 @@ npm install gh-pages --save-dev
 
 ```
 
-
+nvm install 22.12
+nvm use 22,12
 
 ---
 
