@@ -24,20 +24,40 @@ const GlobalStyles = () => (
     /* Animations */
     .indian-script-float { animation: float 12s ease-in-out infinite; }
     @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.1; }
-      50% { transform: translateY(-15px) rotate(3deg); opacity: 0.2; }
+      0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+      50% { transform: translateY(-15px) rotate(3deg); opacity: 0.6; }
     }
 
     /* Pattern Overlay */
     .bg-pattern {
-      background-image: radial-gradient(#D97706 0.5px, transparent 0.5px), radial-gradient(#D97706 0.5px, transparent 0.5px);
-      background-size: 20px 20px;
-      background-position: 0 0, 10px 10px;
+      background-image: radial-gradient(#D97706 0.8px, transparent 0.8px), radial-gradient(#D97706 0.8px, transparent 0.8px);
+      background-size: 24px 24px;
+      background-position: 0 0, 12px 12px;
+    }
+    
+    @keyframes slide-up {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .animate-slide-up {
+      animation: slide-up 0.5s ease-out forwards;
+    }
+
+    /* Tassel Swing Animation */
+    @keyframes swing {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(5deg); }
+      75% { transform: rotate(-5deg); }
+      100% { transform: rotate(0deg); }
+    }
+    .tassel-swing {
+      transform-origin: top center;
+      animation: swing 3s ease-in-out infinite;
     }
   `}</style>
 );
 
-// --- TRANSLATIONS (Unchanged) ---
+// --- TRANSLATIONS ---
 const translations = {
   en: {
     name: "Aishwarya Mahesh",
@@ -67,37 +87,46 @@ const translations = {
     liveAt: "Live at Chennai",
     watchHighlights: "Watch Highlights",
     designedBy: "Designed with Raga & Rhythm",
-    t1_title: "Shower Aria in C Major", t1_sub: "Very Reverb • Much Echo",
-    t2_title: "Humming While Cooking", t2_sub: "Sizzling Sounds • Raga Hunger",
-    t3_title: "Trying High Notes", t3_sub: "Neighbors Complained",
-    t4_title: "Morning Riaz", t4_sub: "Early Bird Special",
+    t1_title: "Concert for VVS Foundation", t1_sub: "Live Performance",
+    t2_title: "Beeti Na Bitai Raina", t2_sub: "Cover • Light Classical",
+    t3_title: "Suswara Concert", t3_sub: "Facebook Live Series",
+    t4_title: "Tatvaloka", t4_sub: "Full Concert",
     e1_venue: "The Great Shower Symphony", e1_loc: "BATHROOM",
     e2_venue: "Serenading the Neighbors' Cat", e2_loc: "ROOF",
-    e3_venue: "Midnight Snack Arias", e3_loc: "KITCHEN"
+    e3_venue: "Midnight Snack Arias", e3_loc: "KITCHEN",
+    upcoming: "Upcoming Event",
+    getTickets: "Get Tickets"
   },
-  // ... (Other languages same as before, simplified for brevity in this diff, assume they exist)
-  hi: { name: "ऐश्वर्या महेश", about: "परिचय", music: "संगीत", events: "कार्यक्रम", contact: "संपर्क", listen: "अभी सुनें", type: "कर्नाटक शास्त्रीय संगीत", raga: "राग", quote: "संगीत केवल प्रदर्शन नहीं है...", sadhana: "साधना", training: "वर्षों का प्रशिक्षण", concerts: "कॉन्सर्ट", works: "चयनित कृतियां", viewAll: "सभी देखें", performances: "प्रस्तुतियां", details: "विवरण देखें", explore: "खोजें", connect: "जुड़ें", desc: "प्रामाणिक कर्नाटक संगीत को आत्मा तक पहुँचाना।", artistAbout: "मैं कर्नाटक संगीत की छात्रा हूँ...", tagline: "2010 से सही श्रुति खोजने का प्रयास।", droneOn: "तानपूरा चालु", droneOff: "तानपूरा बंद", menu: "मेन्यू", liveAt: "चेन्नई में लाइव", watchHighlights: "झलकियाँ देखें", designedBy: "राग और लय के साथ निर्मित", t1_title: "शॉवर में गायन", t1_sub: "गूंज", t2_title: "गुनगुनाना", t2_sub: "राग भूख", t3_title: "ऊँचे स्वर", t3_sub: "शिकायत", t4_title: "सुबह का रियाज़", t4_sub: "अर्ली बर्ड", e1_venue: "महान शॉवर सिम्फनी", e1_loc: "स्नानघर", e2_venue: "पड़ोसी की बिल्ली", e2_loc: "छत", e3_venue: "मध्यरात्रि नाश्ता", e3_loc: "रसोई" },
-  kn: { name: "ಐಶ್ವರ್ಯ ಮಹೇಶ್", about: "ಪರಿಚಯ", music: "ಸಂಗೀತ", events: "ಕಾರ್ಯಕ್ರಮಗಳು", contact: "ಸಂಪರ್ಕ", listen: "ಕೇಳಿ", type: "ಕರ್ನಾಟಿಕ್ ಶಾಸ್ತ್ರೀಯ ಸಂಗೀತ", raga: "ರಾಗ", quote: "ಸಂಗೀತ ಕೇವಲ ಪ್ರದರ್ಶನವಲ್ಲ...", sadhana: "ಸಾಧನಾ", training: "ವರ್ಷಗಳ ತರಬೇತಿ", concerts: "ಕಚೇರಿಗಳು", works: "ಆಯ್ದ ಕೃತಿಗಳು", viewAll: "ಎಲ್ಲವನ್ನೂ ನೋಡಿ", performances: "ಪ್ರದರ್ಶನಗಳು", details: "ವಿವರಗಳು", explore: "ಅನ್ವೇಷಿಸಿ", connect: "ಸಂಪರ್ಕಿಸಿ", desc: "ಅಪ್ಪಟ ಕರ್ನಾಟಕ ಸಂಗೀತ...", artistAbout: "ನಾನು ಕರ್ನಾಟಕ ಸಂಗೀತದ ವಿದ್ಯಾರ್ಥಿನಿ...", tagline: "2010 ರಿಂದ ಸರಿಯಾದ ಶ್ರುತಿಗಾಗಿ ಹುಡುಕಾಟ.", droneOn: "ಶ್ರುತಿ ಆನ್", droneOff: "ಶ್ರುತಿ ಆಫ್", menu: "ಮೆನು", liveAt: "ಚೆನ್ನೈನಲ್ಲಿ ಲೈವ್", watchHighlights: "ಮುಖ್ಯಾಂಶಗಳು", designedBy: "ರಾಗ ಮತ್ತು ಲಯ", t1_title: "ಶವರ್ ರಾಗ", t1_sub: "ಪ್ರತಿಧ್ವನಿ", t2_title: "ಅಡುಗೆ ಹಾಡು", t2_sub: "ರುಚಿಕರ", t3_title: "ತಾರಕ ಸ್ಥಾಯಿ", t3_sub: "ದೂರು", t4_title: "ಮುಂಜಾನೆ ರಿಯಾಜ್", t4_sub: "ಬೆಳಗಿನ ರಾಗ", e1_venue: "ಶವರ್ ಕಚೇರಿ", e1_loc: "ಸ್ನಾನಗೃಹ", e2_venue: "ಬೆಕ್ಕಿಗಾಗಿ ಸಂಗೀತ", e2_loc: "ಮಿದ್ದು", e3_venue: "ಮಧ್ಯರಾತ್ರಿ ರಾಗ", e3_loc: "ಅಡುಗೆಮನೆ" },
-  ta: { name: "ஐஸ்வர்யா மகேஷ்", about: "அறிமுகம்", music: "இசை", events: "நிகழ்வுகள்", contact: "தொடர்பு", listen: "கேளுங்கள்", type: "கர்நாடக இசை", raga: "ராகம்", quote: "இசை என்பது வெறும் நிகழ்ச்சியல்ல...", sadhana: "சாதனா", training: "ஆண்டுகள் பயிற்சி", concerts: "கச்சேரிகள்", works: "படைப்புகள்", viewAll: "அனைத்தும்", performances: "நிகழ்ச்சிகள்", details: "விவரங்கள்", explore: "ஆராயுங்கள்", connect: "இணைக்கவும்", desc: "உண்மையான கர்நாடக இசை...", artistAbout: "நான் கர்நாடக இசையின் மாணவி...", tagline: "2010 முதல் சரியான ஸ்ருதியைத் தேடும் முயற்சி.", droneOn: "ஸ்ருதி ஆன்", droneOff: "ஸ்ருதி ஆஃப்", menu: "மெனு", liveAt: "சென்னையில் நேரலை", watchHighlights: "சிறப்பம்சங்கள்", designedBy: "ராகம் தாளம்", t1_title: "குளியலறை ராகம்", t1_sub: "எதிரொலி", t2_title: "சமைக்கும் போது", t2_sub: "சுவை", t3_title: "உயர் ஸ்தாயி", t3_sub: "புகார்", t4_title: "காலை ரியாஸ்", t4_sub: "சிறப்பு", e1_venue: "குளியலறை கச்சேரி", e1_loc: "குளியலறை", e2_venue: "பூனைக்கு பாட்டு", e2_loc: "மாடி", e3_venue: "நள்ளிரவு சிற்றுண்டி", e3_loc: "சமையலறை" },
-  te: { name: "ఐశ్వర్య మహేష్", about: "పరిచయం", music: "సంగీతం", events: "కార్యక్రమాలు", contact: "సంప్రదించండి", listen: "వినండి", type: "కర్ణాటక సంగీతం", raga: "రాగం", quote: "సంగీతం కేవలం ప్రదర్శన కాదు...", sadhana: "సాధన", training: "ఏళ్ళ శిక్షణ", concerts: "కచేరీలు", works: "కృతులు", viewAll: "అన్నీ చూడండి", performances: "ప్రదర్శనలు", details: "వివరాలు", explore: "అన్వేషించండి", connect: "కనెక్ట్", desc: "స్వచ్ఛమైన కర్ణాటక సంగీతం...", artistAbout: "నేను కర్ణాటక సంగీత విద్యార్థిని...", tagline: "2010 నుండి సరైన శ్రుతి కోసం ప్రయత్నం.", droneOn: "శ్రుతి ఆన్", droneOff: "శ్రుతి ఆఫ్", menu: "మెనూ", liveAt: "చెన్నైలో లైవ్", watchHighlights: "ముఖ్యాంశాలు", designedBy: "రాగం తాళం", t1_title: "షవర్ పాట", t1_sub: "ప్రతిధ్వని", t2_title: "వంట పాట", t2_sub: "రుచి", t3_title: "హై పిచ్", t3_sub: "ఫిర్యాదు", t4_title: "ఉదయం రియాజ్", t4_sub: "స్పెషల్", e1_venue: "షవర్ సింఫనీ", e1_loc: "బాత్రూమ్", e2_venue: "పిల్లి పాట", e2_loc: "పైకప్పు", e3_venue: "స్నాక్ రాగాలు", e3_loc: "వంటగది" }
+  // Other languages use english keys for specific song titles to keep it simple for now
+  hi: { name: "ऐश्वर्या महेश", about: "परिचय", music: "संगीत", events: "कार्यक्रम", contact: "संपर्क", listen: "अभी सुनें", type: "कर्नाटक शास्त्रीय संगीत", raga: "राग", quote: "संगीत केवल प्रदर्शन नहीं है...", sadhana: "साधना", training: "वर्षों का प्रशिक्षण", concerts: "कॉन्सर्ट", works: "चयनित कृतियां", viewAll: "सभी देखें", performances: "प्रस्तुतियां", details: "विवरण देखें", explore: "खोजें", connect: "जुड़ें", desc: "प्रामाणिक कर्नाटक संगीत को आत्मा तक पहुँचाना।", artistAbout: "मैं कर्नाटक संगीत की छात्रा हूँ...", tagline: "2010 से सही श्रुति खोजने का प्रयास।", droneOn: "तानपूरा चालु", droneOff: "तानपूरा बंद", menu: "मेन्यू", liveAt: "चेन्नई में लाइव", watchHighlights: "झलकियाँ देखें", designedBy: "राग और लय के साथ निर्मित", t1_title: "VVS फाउंडेशन के लिए कॉन्सर्ट", t1_sub: "लाइव", t2_title: "बीती ना बिताई रैना", t2_sub: "कवर", t3_title: "सुस्वरा कॉन्सर्ट", t3_sub: "फेसबुक लाइव", t4_title: "तत्वलोका", t4_sub: "पूर्ण कॉन्सर्ट", e1_venue: "महान शॉवर सिम्फनी", e1_loc: "स्नानघर", e2_venue: "पड़ोसी की बिल्ली", e2_loc: "छत", e3_venue: "मध्यरात्रि नाश्ता", e3_loc: "रसोई", upcoming: "आगामी कार्यक्रम", getTickets: "टिकट प्राप्त करें" },
+  kn: { name: "ಐಶ್ವರ್ಯ ಮಹೇಶ್", about: "ಪರಿಚಯ", music: "ಸಂಗೀತ", events: "ಕಾರ್ಯಕ್ರಮಗಳು", contact: "ಸಂಪರ್ಕ", listen: "ಕೇಳಿ", type: "ಕರ್ನಾಟಿಕ್ ಶಾಸ್ತ್ರೀಯ ಸಂಗೀತ", raga: "ರಾಗ", quote: "ಸಂಗೀತ ಕೇವಲ ಪ್ರದರ್ಶನವಲ್ಲ...", sadhana: "ಸಾಧನಾ", training: "ವರ್ಷಗಳ ತರಬೇತಿ", concerts: "ಕಚೇರಿಗಳು", works: "ಆಯ್ದ ಕೃತಿಗಳು", viewAll: "ಎಲ್ಲವನ್ನೂ ನೋಡಿ", performances: "ಪ್ರದರ್ಶನಗಳು", details: "ವಿವರಗಳು", explore: "ಅನ್ವೇಷಿಸಿ", connect: "ಸಂಪರ್ಕಿಸಿ", desc: "ಅಪ್ಪಟ ಕರ್ನಾಟಕ ಸಂಗೀತ...", artistAbout: "ನಾನು ಕರ್ನಾಟಕ ಸಂಗೀತದ ವಿದ್ಯಾರ್ಥಿನಿ...", tagline: "2010 ರಿಂದ ಸರಿಯಾದ ಶ್ರುತಿಗಾಗಿ ಹುಡುಕಾಟ.", droneOn: "ಶ್ರುತಿ ಆನ್", droneOff: "ಶ್ರುತಿ ಆಫ್", menu: "ಮೆನು", liveAt: "ಚೆನ್ನೈನಲ್ಲಿ ಲೈವ್", watchHighlights: "ಮುಖ್ಯಾಂಶಗಳು", designedBy: "ರಾಗ ಮತ್ತು ಲಯ", t1_title: "VVS ಫೌಂಡೇಶನ್ ಕಚೇರಿ", t1_sub: "ಲೈವ್", t2_title: "ಬೀತಿ ನಾ ಬಿತಾಯಿ ರೈನಾ", t2_sub: "ಕವರ್", t3_title: "ಸುಸ್ವರ ಕಚೇರಿ", t3_sub: "ಫೇಸ್‌ಬುಕ್ ಲೈವ್", t4_title: "ತತ್ವಾಲೋಕ", t4_sub: "ಪೂರ್ಣ ಕಚೇರಿ", e1_venue: "ಶವರ್ ಕಚೇರಿ", e1_loc: "ಸ್ನಾನಗೃಹ", e2_venue: "ಬೆಕ್ಕಿಗಾಗಿ ಸಂಗೀತ", e2_loc: "ಮಿದ್ದು", e3_venue: "ಮಧ್ಯರಾತ್ರಿ ರಾಗ", e3_loc: "ಅಡುಗೆಮನೆ", upcoming: "ಮುಂಬರುವ ಕಾರ್ಯಕ್ರಮ", getTickets: "ಟಿಕೆಟ್ ಪಡೆಯಿರಿ" },
+  ta: { name: "ஐஸ்வர்யா மகேஷ்", about: "அறிமுகம்", music: "இசை", events: "நிகழ்வுகள்", contact: "தொடர்பு", listen: "கேளுங்கள்", type: "கர்நாடக இசை", raga: "ராகம்", quote: "இசை என்பது வெறும் நிகழ்ச்சியல்ல...", sadhana: "சாதனா", training: "ஆண்டுகள் பயிற்சி", concerts: "கச்சேரிகள்", works: "படைப்புகள்", viewAll: "அனைத்தும்", performances: "நிகழ்ச்சிகள்", details: "விவரங்கள்", explore: "ஆராயுங்கள்", connect: "இணைக்கவும்", desc: "உண்மையான கர்நாடக இசை...", artistAbout: "நான் கர்நாடக இசையின் மாணவி...", tagline: "2010 முதல் சரியான ஸ்ருதியைத் தேடும் முயற்சி.", droneOn: "ஸ்ருதி ஆன்", droneOff: "ஸ்ருதி ஆஃப்", menu: "மெனு", liveAt: "சென்னையில் நேரலை", watchHighlights: "சிறப்பம்சங்கள்", designedBy: "ராகம் தாளம்", t1_title: "VVS அறக்கட்டளை கச்சேரி", t1_sub: "நேரலை", t2_title: "பீதி நா பிதாய் ரைனா", t2_sub: "கவர்", t3_title: "சுஸ்வரா கச்சேரி", t3_sub: "பேஸ்புக் நேரலை", t4_title: "தத்வாலோகா", t4_sub: "முழு கச்சேரி", e1_venue: "குளியலறை கச்சேரி", e1_loc: "குளியலறை", e2_venue: "பூனைக்கு பாட்டு", e2_loc: "மாடி", e3_venue: "நள்ளிரவு சிற்றுண்டி", e3_loc: "சமையலறை", upcoming: "வரவிருக்கும் நிகழ்வு", getTickets: "டிக்கெட் பெறுங்கள்" },
+  te: { name: "ఐశ్వర్య మహేష్", about: "పరిచయం", music: "సంగీతం", events: "కార్యక్రమాలు", contact: "సంప్రదించండి", listen: "వినండి", type: "కర్ణాటక సంగీతం", raga: "రాగం", quote: "సంగీతం కేవలం ప్రదర్శన కాదు...", sadhana: "సాధన", training: "ఏళ్ళ శిక్షణ", concerts: "కచేరీలు", works: "కృతులు", viewAll: "అన్నీ చూడండి", performances: "ప్రదర్శనలు", details: "వివరాలు", explore: "అన్వేషించండి", connect: "కనెక్ట్", desc: "స్వచ్ఛమైన కర్ణాటక సంగీతాన్ని ఆత్మకు చేరవేయడం.", artistAbout: "నేను కర్ణాటక సంగీత విద్యార్థిని...", tagline: "2010 నుండి సరైన శ్రుతి కోసం ప్రయత్నం.", droneOn: "శ్రుతి ఆన్", droneOff: "శ్రుతి ఆఫ్", menu: "మెనూ", liveAt: "చెన్నైలో లైవ్", watchHighlights: "ముఖ్యాంశాలు", designedBy: "రాగం తాళం", t1_title: "VVS ఫౌండేషన్ కచేరీ", t1_sub: "లైవ్", t2_title: "బీతీ నా బితాయీ రైనా", t2_sub: "కవర్", t3_title: "సుస్వర కచేరీ", t3_sub: "ఫేస్‌బుక్ లైవ్", t4_title: "తత్వాలోక", t4_sub: "పూర్తి కచేరీ", e1_venue: "షవర్ సింఫనీ", e1_loc: "బాత్రూమ్", e2_venue: "పిల్లి పాట", e2_loc: "పైకప్పు", e3_venue: "స్నాక్ రాగాలు", e3_loc: "వంటగది", upcoming: "రాబోయే కార్యక్రమం", getTickets: "టిక్కెట్లు పొందండి" }
 };
 
-// --- SOUND ENGINE (Unchanged) ---
+// --- SOUND ENGINE ---
 const useTanpura = () => {
   const audioContext = useRef(null);
   const oscillators = useRef([]);
   const gainNode = useRef(null);
   const [isPlaying, setIsPlaying] = useState(true);
 
-  const startDrone = useCallback(() => {
+  const initAudio = () => {
     if (!audioContext.current) {
       audioContext.current = new (window.AudioContext || window.webkitAudioContext)();
     }
-    const ctx = audioContext.current;
+    return audioContext.current;
+  };
+
+  const startDrone = useCallback(() => {
+    const ctx = initAudio();
     if (ctx.state === 'suspended') ctx.resume();
+    if (oscillators.current.length > 0) return;
+
     gainNode.current = ctx.createGain();
     gainNode.current.gain.value = 0.1; 
     gainNode.current.connect(ctx.destination);
+    
     const baseFreq = 207.65; 
     [baseFreq, baseFreq * 1.5, baseFreq * 2].forEach((freq, i) => {
       const osc = ctx.createOscillator();
@@ -119,7 +148,7 @@ const useTanpura = () => {
   }, []);
 
   const stopDrone = useCallback(() => {
-    if (gainNode.current) {
+    if (gainNode.current && audioContext.current) {
       gainNode.current.gain.exponentialRampToValueAtTime(0.001, audioContext.current.currentTime + 1);
     }
     setTimeout(() => {
@@ -129,10 +158,46 @@ const useTanpura = () => {
     }, 1000);
   }, []);
 
-  return { isPlaying, toggle: isPlaying ? stopDrone : startDrone };
+  useEffect(() => {
+    const handleInteraction = () => {
+      const ctx = initAudio();
+      if (ctx.state === 'suspended') {
+        ctx.resume().then(() => {
+          if (isPlaying && oscillators.current.length === 0) {
+            startDrone();
+          }
+        });
+      }
+      document.removeEventListener('click', handleInteraction);
+      document.removeEventListener('keydown', handleInteraction);
+      document.removeEventListener('scroll', handleInteraction);
+    };
+
+    if (isPlaying) {
+        try { startDrone(); } catch (e) { console.log("Autoplay blocked"); }
+    }
+
+    document.addEventListener('click', handleInteraction);
+    document.addEventListener('keydown', handleInteraction);
+    document.addEventListener('scroll', handleInteraction);
+
+    return () => {
+      document.removeEventListener('click', handleInteraction);
+      document.removeEventListener('keydown', handleInteraction);
+      document.removeEventListener('scroll', handleInteraction);
+      if(gainNode.current) stopDrone();
+    };
+  }, []);
+
+  const toggle = () => {
+    if (isPlaying) { setIsPlaying(false); stopDrone(); }
+    else { setIsPlaying(true); startDrone(); }
+  };
+
+  return { isPlaying, toggle };
 };
 
-// --- CUSTOM CURSOR (Unchanged) ---
+// --- CUSTOM CURSOR ---
 const CustomCursor = ({ isDark }) => {
   const canvasRef = useRef(null);
   const particles = useRef([]);
@@ -178,20 +243,67 @@ const CustomCursor = ({ isDark }) => {
   return <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 z-[100] md:block hidden" />;
 };
 
-// --- ORNAMENTS ---
-// A reusable SVG flourish for corners
-const CornerFlourish = ({ className, color }) => (
-  <svg className={`absolute w-24 h-24 md:w-32 md:h-32 ${className}`} viewBox="0 0 100 100" fill="none" stroke={color} strokeWidth="1.2">
-    {/* Paisley/Mango Curve */}
-    <path d="M10 10 C 20 10, 50 10, 60 30 C 70 50, 50 70, 30 70 C 10 70, 10 40, 40 40 C 60 40, 90 60, 90 90" />
-    {/* Decorative dots/accents */}
-    <circle cx="40" cy="40" r="2" fill={color} />
-    <circle cx="60" cy="30" r="2" fill={color} />
-    <path d="M10 10 L 10 30" />
-    <path d="M10 10 L 30 10" />
-    <path d="M5 5 L 15 15 M 15 5 L 5 15" strokeWidth="0.5" opacity="0.5"/>
-  </svg>
+// --- LAYERED MANDALA (Intricate & Subtle) ---
+const MandalaBg = ({ isNightMode }) => (
+  <div className="absolute inset-0 flex items-center justify-center opacity-[0.08] pointer-events-none transition-opacity duration-1000">
+    <svg className={`w-[140vh] h-[140vh] animate-[spin_120s_linear_infinite] ${isNightMode ? 'text-white' : 'text-[#78350F]'}`} viewBox="0 0 200 200">
+       <circle cx="100" cy="100" r="90" stroke="currentColor" strokeWidth="0.2" fill="none" strokeDasharray="4 4" />
+       <circle cx="100" cy="100" r="70" stroke="currentColor" strokeWidth="0.3" fill="none" />
+       {[...Array(8)].map((_, i) => (
+         <g key={i} transform={`rotate(${i * 45} 100 100)`}>
+            <path d="M100 30 Q 115 60 100 90 Q 85 60 100 30" stroke="currentColor" strokeWidth="0.5" fill="none" />
+            <path d="M100 45 Q 105 60 100 75 Q 95 60 100 45" stroke="currentColor" strokeWidth="0.3" fill="none" />
+            <circle cx="100" cy="25" r="1" fill="currentColor" />
+         </g>
+       ))}
+       <path d="M100 50 L 135 85 L 100 120 L 65 85 Z" stroke="currentColor" strokeWidth="0.2" fill="none" />
+       <circle cx="100" cy="100" r="10" stroke="currentColor" strokeWidth="0.5" fill="none" />
+       {[...Array(12)].map((_, i) => (
+         <path key={i} d={`M100 100 L ${100 + 10 * Math.cos(i * Math.PI / 6)} ${100 + 10 * Math.sin(i * Math.PI / 6)}`} stroke="currentColor" strokeWidth="0.2" />
+       ))}
+    </svg>
+  </div>
 );
+
+// --- TASSEL BORDER (Hero Only) ---
+const TasselBorder = ({ isNightMode, scrolled }) => {
+  const color = isNightMode ? '#D97706' : '#D97706'; 
+  
+  // Fade out completely when scrolled
+  const visibility = scrolled ? "opacity-0 pointer-events-none" : "opacity-100";
+
+  return (
+    <div className={`fixed inset-0 z-0 pointer-events-none hidden md:flex justify-between transition-opacity duration-1000 ${visibility}`}>
+       {/* Left Tassel Strip */}
+       <div className="h-full w-12 relative">
+          <svg height="100%" width="20" preserveAspectRatio="none" viewBox="0 0 20 100" className="text-[#D97706] opacity-30 block h-full absolute left-0">
+             <path d="M0 0 Q 20 5 0 10 Q 20 15 0 20 Q 20 25 0 30 Q 20 35 0 40 Q 20 45 0 50 Q 20 55 0 60 Q 20 65 0 70 Q 20 75 0 80 Q 20 85 0 90 Q 20 95 0 100" fill="none" stroke="currentColor" strokeWidth="1.5" />
+          </svg>
+          <div className="absolute top-0 left-0 h-full w-full flex flex-col justify-around py-8">
+             {[...Array(6)].map((_, i) => (
+                <div key={i} className="w-0.5 h-16 bg-[#D97706]/40 ml-2 tassel-swing origin-top relative">
+                   <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#D97706]"></div>
+                </div>
+             ))}
+          </div>
+       </div>
+
+       {/* Right Tassel Strip */}
+       <div className="h-full w-12 relative transform scale-x-[-1]">
+          <svg height="100%" width="20" preserveAspectRatio="none" viewBox="0 0 20 100" className="text-[#D97706] opacity-30 block h-full absolute left-0">
+             <path d="M0 0 Q 20 5 0 10 Q 20 15 0 20 Q 20 25 0 30 Q 20 35 0 40 Q 20 45 0 50 Q 20 55 0 60 Q 20 65 0 70 Q 20 75 0 80 Q 20 85 0 90 Q 20 95 0 100" fill="none" stroke="currentColor" strokeWidth="1.5" />
+          </svg>
+          <div className="absolute top-0 left-0 h-full w-full flex flex-col justify-around py-8">
+             {[...Array(6)].map((_, i) => (
+                <div key={i} className="w-0.5 h-16 bg-[#D97706]/40 ml-2 tassel-swing origin-top relative" style={{animationDelay: '0.5s'}}>
+                   <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#D97706]"></div>
+                </div>
+             ))}
+          </div>
+       </div>
+    </div>
+  );
+};
 
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -200,7 +312,7 @@ const App = () => {
   const [scrolled, setScrolled] = useState(false);
   const [showEventToast, setShowEventToast] = useState(true);
   const [isNightMode, setIsNightMode] = useState(false);
-  const [portraitImage, setPortraitImage] = useState('');
+  const [portraitImage, setPortraitImage] = useState(''); // Empty by default
   const [lang, setLang] = useState('en');
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   
@@ -222,33 +334,33 @@ const App = () => {
       id: 1, 
       title: t.t1_title, 
       subtitle: t.t1_sub, 
-      time: "04:20",
-      image: "https://images.unsplash.com/photo-1516280440614-6697288d5d38?q=80&w=2070&auto=format&fit=crop", // Rain/Shower
-      link: placeholderLink
+      time: "10:15",
+      image: "https://img.youtube.com/vi/gLA-b8uMlp4/mqdefault.jpg", 
+      link: "https://www.youtube.com/watch?v=gLA-b8uMlp4"
     },
     { 
       id: 2, 
       title: t.t2_title, 
       subtitle: t.t2_sub, 
-      time: "02:15",
-      image: "https://images.unsplash.com/photo-1556910103-1c02745a30bf?q=80&w=2070&auto=format&fit=crop", // Cooking/Kitchen
-      link: placeholderLink
+      time: "01:24",
+      image: "https://img.youtube.com/vi/H1qMF8eXB3s/mqdefault.jpg", 
+      link: "https://www.youtube.com/watch?v=H1qMF8eXB3s"
     },
     { 
       id: 3, 
       title: t.t3_title, 
       subtitle: t.t3_sub, 
-      time: "00:15",
-      image: "https://images.unsplash.com/photo-1514117445516-2ecfc9c67080?q=80&w=2070&auto=format&fit=crop", // High Notes/Abstract
-      link: placeholderLink
+      time: "25:30",
+      image: "https://img.youtube.com/vi/SLSd1YjTWiI/mqdefault.jpg", 
+      link: "https://www.youtube.com/watch?v=SLSd1YjTWiI"
     },
     { 
       id: 4, 
       title: t.t4_title, 
       subtitle: t.t4_sub, 
-      time: "06:30",
-      image: "https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=2070&auto=format&fit=crop", // Morning/Sunrise
-      link: placeholderLink
+      time: "15:45",
+      image: "https://img.youtube.com/vi/FoBtiycK-nY/mqdefault.jpg", 
+      link: "https://www.youtube.com/watch?v=FoBtiycK-nY"
     }
   ];
 
@@ -264,19 +376,14 @@ const App = () => {
 
   const scrollTo = (id) => {
     setIsMenuOpen(false);
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    }, 500);
   };
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => setScrolled(window.scrollY > 100);
     window.addEventListener('scroll', handleScroll);
-    const images = [
-      "https://images.unsplash.com/photo-1629828552174-8b630e258688?q=80&w=1974&auto=format&fit=crop", 
-      "https://images.unsplash.com/photo-1516280440614-6697288d5d38?q=80&w=2070&auto=format&fit=crop", 
-      "https://images.unsplash.com/photo-1599566150163-29194dcaad36?q=80&w=1887&auto=format&fit=crop", 
-      "https://images.unsplash.com/photo-1525926477800-7a3be5800fcb?q=80&w=1964&auto=format&fit=crop"
-    ];
-    setPortraitImage(images[Math.floor(Math.random() * images.length)]);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -300,26 +407,31 @@ const App = () => {
     </div>
   );
 
-  const cornerColor = isNightMode ? '#fb923c' : '#D97706'; // orange-400 : primary color
-
   return (
     <div className={`min-h-screen font-base-${lang} transition-colors duration-1000 overflow-x-hidden relative ${isNightMode ? 'bg-[#0B1221] text-[#E0E7FF] selection:bg-[#F59E0B] selection:text-black' : 'bg-[#FDFBF7] text-[#422006] selection:bg-[#D97706] selection:text-white'}`}>
       <GlobalStyles />
       
-      {/* Background Texture (Rangoli Dots Pattern) */}
+      {/* Background Texture */}
       <div className={`fixed inset-0 opacity-[0.08] pointer-events-none z-0 bg-pattern ${isNightMode ? 'invert opacity-[0.05]' : ''}`}></div>
-      {/* Vignette Overlay for Old Paper feel */}
       <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.05)_100%)]"></div>
 
       <CustomCursor isDark={isNightMode} />
 
-      {/* ORNATE CORNER FRAMES (The "Swirly" replacement for the square border) */}
-      <div className="fixed inset-0 pointer-events-none z-50 hidden md:block p-4">
-         <CornerFlourish color={cornerColor} className="top-4 left-4" />
-         <CornerFlourish color={cornerColor} className="top-4 right-4 transform scale-x-[-1]" />
-         <CornerFlourish color={cornerColor} className="bottom-4 left-4 transform scale-y-[-1]" />
-         <CornerFlourish color={cornerColor} className="bottom-4 right-4 transform scale-[-1]" />
-      </div>
+      {/* DYNAMIC TASSEL BORDER (Hero Only) */}
+      <TasselBorder isNightMode={isNightMode} scrolled={scrolled} />
+
+      {/* Pop-up Toast - Colors Matched to Menu Screen */}
+      {showEventToast && (
+        <div className={`fixed bottom-8 right-8 z-[60] p-6 max-w-xs shadow-2xl border-l-4 border-[#D97706] animate-slide-up hidden md:block transition-all duration-500 ${isNightMode ? 'bg-[#0B1221] text-[#E0E7FF]' : 'bg-[#451a03] text-[#FEF3C7]'}`}>
+          <button onClick={() => setShowEventToast(false)} className="absolute top-2 right-2 opacity-50 hover:opacity-100"><X size={14} /></button>
+          <div className="text-xs tracking-[0.2em] uppercase text-[#D97706] mb-2">{t.upcoming}</div>
+          <h4 className={`text-xl font-base-${lang} mb-1 font-bold`}>{events[0].venue}</h4>
+          <p className={`text-sm mb-4 opacity-70`}>{events[0].date} • {events[0].loc}</p>
+          <a href={events[0].link} target="_blank" rel="noreferrer" className={`w-full py-2 transition-colors text-xs uppercase tracking-widest flex items-center justify-center gap-2 ${isNightMode ? 'bg-[#D97706] text-black hover:bg-[#D97706]/90' : 'bg-[#D97706] text-white hover:bg-[#b45309]'}`}>
+            <Ticket size={14} /> {t.getTickets}
+          </a>
+        </div>
+      )}
 
       {/* Nav */}
       <nav className={`fixed w-full z-40 transition-all duration-500 ${scrolled ? (isNightMode ? 'bg-[#0B1221]/95 border-[#1e293b]' : 'bg-[#FDFBF7]/95 border-[#e7e5e4]') + ' backdrop-blur-md py-4 border-b shadow-sm' : 'py-8'}`}>
@@ -334,7 +446,6 @@ const App = () => {
               <a href={placeholderLink} target="_blank" rel="noreferrer" className="hover:text-[#D97706] transition-colors"><Youtube size={20} /></a>
             </div>
             
-            {/* Language Switcher */}
             <div className="relative">
               <button 
                 onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
@@ -375,15 +486,69 @@ const App = () => {
         </div>
       </nav>
 
-      {/* Full Screen Menu */}
-      <div className={`fixed inset-0 z-40 transition-transform duration-700 ${isMenuOpen ? 'translate-y-0' : '-translate-y-full'} flex items-center justify-center ${isNightMode ? 'bg-[#0B1221] text-[#E0E7FF]' : 'bg-[#451a03] text-[#FEF3C7]'}`}>
-        <button onClick={() => setIsMenuOpen(false)} className="absolute top-8 right-8 p-2 hover:rotate-90 transition-transform duration-300"><X size={32} /></button>
-        <div className="text-center space-y-8">
-          {['about', 'music', 'events', 'contact'].map((item) => (
-            <button key={item} onClick={() => scrollTo(item)} className="block text-5xl md:text-7xl font-base-${lang} hover:text-[#D97706] transition-colors capitalize">
-              {t[item]}
+      {/* CURTAIN MENU (Cloud Edge + Tassels) */}
+      <div className={`fixed inset-0 z-40 pointer-events-none flex ${isMenuOpen ? 'pointer-events-auto' : ''}`}>
+        {/* Left Curtain */}
+        <div className={`relative w-1/2 h-full transition-transform duration-1000 ease-in-out transform ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} ${isNightMode ? 'bg-[#0B1221]' : 'bg-[#451a03]'} flex items-center justify-end`}>
+           <div className="absolute right-0 h-full transform translate-x-full z-10">
+              <svg height="100%" width="20" preserveAspectRatio="none" viewBox="0 0 20 100" className={`block ${isNightMode ? 'text-[#0B1221]' : 'text-[#451a03]'}`}>
+                 <path d="M0 0 Q 20 5 0 10 Q 20 15 0 20 Q 20 25 0 30 Q 20 35 0 40 Q 20 45 0 50 Q 20 55 0 60 Q 20 65 0 70 Q 20 75 0 80 Q 20 85 0 90 Q 20 95 0 100" fill="currentColor" />
+              </svg>
+              {/* Tassels attached to scalloped edge */}
+              <div className="absolute top-0 left-0 h-full w-4 flex flex-col justify-around">
+                 {[...Array(8)].map((_, i) => (
+                    <div key={i} className="w-1 h-12 bg-[#D97706]/60 mx-auto tassel-swing origin-top relative">
+                       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#D97706]"></div>
+                    </div>
+                 ))}
+              </div>
+           </div>
+        </div>
+        
+        {/* Right Curtain */}
+        <div className={`relative w-1/2 h-full transition-transform duration-1000 ease-in-out transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} ${isNightMode ? 'bg-[#0B1221]' : 'bg-[#451a03]'} flex items-center justify-start`}>
+           <div className="absolute left-0 h-full transform -translate-x-full z-10 scale-x-[-1]">
+              <svg height="100%" width="20" preserveAspectRatio="none" viewBox="0 0 20 100" className={`block ${isNightMode ? 'text-[#0B1221]' : 'text-[#451a03]'}`}>
+                 <path d="M0 0 Q 20 5 0 10 Q 20 15 0 20 Q 20 25 0 30 Q 20 35 0 40 Q 20 45 0 50 Q 20 55 0 60 Q 20 65 0 70 Q 20 75 0 80 Q 20 85 0 90 Q 20 95 0 100" fill="currentColor" />
+              </svg>
+              {/* Tassels */}
+              <div className="absolute top-0 left-0 h-full w-4 flex flex-col justify-around">
+                 {[...Array(8)].map((_, i) => (
+                    <div key={i} className="w-1 h-12 bg-[#D97706]/60 mx-auto tassel-swing origin-top relative" style={{animationDelay: '0.5s'}}>
+                       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#D97706]"></div>
+                    </div>
+                 ))}
+              </div>
+           </div>
+        </div>
+
+        {/* Menu Content (Centered Overlay with Close Button) */}
+        <div className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-500 delay-300 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+           <button onClick={() => setIsMenuOpen(false)} className="absolute top-8 right-8 p-2 hover:rotate-90 transition-transform duration-300 text-[#D97706] z-50"><X size={32} /></button>
+           
+           <div className="text-center space-y-6 mb-8">
+            {['about', 'music', 'events', 'contact'].map((item) => (
+              <button key={item} onClick={() => scrollTo(item)} className="block text-4xl md:text-7xl font-base-${lang} text-[#FEF3C7] hover:text-[#D97706] transition-colors capitalize">
+                {t[item]}
+              </button>
+            ))}
+          </div>
+
+          {/* Mobile Menu Extras (Drone & Socials) */}
+          <div className="flex flex-col items-center gap-6 mt-4">
+             <button 
+              onClick={(e) => { e.stopPropagation(); toggleDrone(); }}
+              className={`flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase hover:text-[#D97706] transition-colors border px-6 py-3 rounded-full text-[#FEF3C7] border-[#FEF3C7] hover:border-[#D97706]`}
+            >
+              {isDronePlaying ? <Volume2 size={16} /> : <VolumeX size={16} />}
+              <span>{isDronePlaying ? t.droneOn : t.droneOff}</span>
             </button>
-          ))}
+
+            <div className="flex gap-8 text-[#FEF3C7]">
+              <a href={placeholderLink} target="_blank" rel="noreferrer" className="hover:text-[#D97706] transition-colors"><Instagram size={24} /></a>
+              <a href={placeholderLink} target="_blank" rel="noreferrer" className="hover:text-[#D97706] transition-colors"><Youtube size={24} /></a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -398,23 +563,15 @@ const App = () => {
             <span className="absolute bottom-[25%] right-[10%] text-5xl indian-script-float text-[#D97706]" style={{animationDelay: '1s'}}>సంగీతం</span>
         </div>
 
-        <div className="absolute inset-0 flex items-center justify-center opacity-[0.05] pointer-events-none">
-          <svg className={`w-[800px] h-[800px] animate-[spin_60s_linear_infinite] ${isNightMode ? 'text-white' : 'text-[#451a03]'}`} viewBox="0 0 100 100">
-             {/* Swirly Mandala */}
-             <path d="M50 0 C 70 20, 80 40, 50 50 C 20 60, 30 80, 50 100" stroke="currentColor" strokeWidth="0.5" fill="none" />
-             <path d="M100 50 C 80 70, 60 80, 50 50 C 40 20, 20 30, 0 50" stroke="currentColor" strokeWidth="0.5" fill="none" />
-             <circle cx="50" cy="50" r="20" stroke="currentColor" strokeWidth="0.5" fill="none" />
-             <circle cx="50" cy="50" r="35" stroke="currentColor" strokeWidth="0.5" fill="none" strokeDasharray="4 4" />
-             <path d="M50 10 Q 70 30 90 50 Q 70 70 50 90 Q 30 70 10 50 Q 30 30 50 10" stroke="currentColor" strokeWidth="0.5" fill="none" />
-          </svg>
-        </div>
+        {/* Updated Mandala (More "Indiany") */}
+        <MandalaBg isNightMode={isNightMode} />
 
         <div className="relative z-10 text-center max-w-5xl mx-auto">
           <button onClick={handleGharanaClick} className={`tracking-[0.4em] text-xs font-bold uppercase mb-6 animate-fade-in-up hover:text-[#D97706] transition-colors ${isNightMode ? 'text-orange-300' : 'text-[#92400e]'}`}>
             {t.type}
           </button>
           
-          <h1 className={`text-5xl md:text-8xl font-base-${lang} font-medium mb-6 transition-colors duration-1000 tracking-tight ${isNightMode ? 'text-[#E0E7FF]' : 'text-[#451a03]'}`}>
+          <h1 className={`text-5xl md:text-8xl font-indian-style font-medium mb-6 transition-colors duration-1000 tracking-tight ${isNightMode ? 'text-[#E0E7FF]' : 'text-[#451a03]'}`}>
             {t.name}
           </h1>
           
@@ -422,7 +579,7 @@ const App = () => {
              {t.tagline}
           </p>
 
-          <a href="#music" className={`inline-flex items-center gap-3 px-8 py-3 rounded-full transition-all hover:scale-105 border ${isNightMode ? 'bg-transparent border-[#D97706] text-[#D97706] hover:bg-[#D97706]/20' : 'bg-transparent border-[#451a03] text-[#451a03] hover:bg-[#FFFBEB]'}`}>
+          <a href="#music" className={`inline-flex items-center gap-3 px-8 py-3 rounded-full transition-all hover:scale-105 border ${isNightMode ? 'bg-[#D97706] text-black hover:bg-[#D97706]/90' : 'bg-[#D97706] text-white hover:bg-[#b45309]'}`}>
             <span className="tracking-widest text-xs font-bold uppercase">{t.listen}</span>
             <Music size={16} />
           </a>
@@ -448,8 +605,16 @@ const App = () => {
       <section id="about" className="py-32 px-6 md:px-12 max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row gap-16 items-center">
           <div className="md:w-1/2 relative">
-            <div className={`relative z-10 aspect-[3/4] overflow-hidden rounded-t-full rounded-b-2xl sepia-[.3] hover:sepia-0 transition-all duration-700 shadow-2xl ${isNightMode ? 'bg-[#1E293B]' : 'bg-[#FFFBEB]'}`}>
-               <img src={portraitImage} alt="Portrait" className="w-full h-full object-cover" />
+            <div className={`relative z-10 aspect-[3/4] overflow-hidden rounded-t-full rounded-b-2xl transition-all duration-700 shadow-2xl bg-[#FFFBEB] flex items-center justify-center ${isNightMode ? 'bg-[#1E293B]' : 'bg-[#FFFBEB]'}`}>
+               {/* PLACEHOLDER for image */}
+               {portraitImage ? (
+                   <img src={portraitImage} alt="Portrait" className="w-full h-full object-cover" /> 
+               ) : (
+                   <div className="text-center p-8 opacity-30">
+                       <div className={`text-6xl mb-4 font-base-${lang} ${isNightMode ? 'text-[#E0E7FF]' : 'text-[#78350F]'}`}>A</div>
+                       <p className={`uppercase tracking-widest text-xs ${isNightMode ? 'text-[#E0E7FF]' : 'text-[#78350F]'}`}>Portrait</p>
+                   </div>
+               )}
             </div>
             {/* Decorative Offset Border */}
             <div className="absolute top-4 -left-4 w-full h-full border-2 border-[#D97706]/30 rounded-t-full rounded-b-2xl z-0"></div>
@@ -612,7 +777,12 @@ const App = () => {
         
         <div className="max-w-6xl mx-auto mt-24 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-xs uppercase tracking-widest">
           <p>&copy; 2024 {t.name}</p>
-          <p className="mt-4 md:mt-0 opacity-50">{t.designedBy}</p>
+          
+          {/* Added Credit Link */}
+          <div className="flex flex-col items-center md:items-end">
+              <p className="mt-4 md:mt-0 opacity-50">{t.designedBy}</p>
+              <a href="#" className="mt-1 opacity-30 hover:opacity-100 transition-opacity text-[10px]">Website by: Name</a>
+          </div>
         </div>
       </footer>
     </div>
