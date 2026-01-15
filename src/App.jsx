@@ -87,7 +87,7 @@ const useTanpura = () => {
   const audioContext = useRef(null);
   const oscillators = useRef([]);
   const gainNode = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   const startDrone = useCallback(() => {
     if (!audioContext.current) {
@@ -218,10 +218,38 @@ const App = () => {
   ];
 
   const tracks = [
-    { id: 1, title: t.t1_title, subtitle: t.t1_sub, time: "04:20" },
-    { id: 2, title: t.t2_title, subtitle: t.t2_sub, time: "02:15" },
-    { id: 3, title: t.t3_title, subtitle: t.t3_sub, time: "00:15" },
-    { id: 4, title: t.t4_title, subtitle: t.t4_sub, time: "06:30" }
+    { 
+      id: 1, 
+      title: t.t1_title, 
+      subtitle: t.t1_sub, 
+      time: "04:20",
+      image: "https://images.unsplash.com/photo-1516280440614-6697288d5d38?q=80&w=2070&auto=format&fit=crop", // Rain/Shower
+      link: placeholderLink
+    },
+    { 
+      id: 2, 
+      title: t.t2_title, 
+      subtitle: t.t2_sub, 
+      time: "02:15",
+      image: "https://images.unsplash.com/photo-1556910103-1c02745a30bf?q=80&w=2070&auto=format&fit=crop", // Cooking/Kitchen
+      link: placeholderLink
+    },
+    { 
+      id: 3, 
+      title: t.t3_title, 
+      subtitle: t.t3_sub, 
+      time: "00:15",
+      image: "https://images.unsplash.com/photo-1514117445516-2ecfc9c67080?q=80&w=2070&auto=format&fit=crop", // High Notes/Abstract
+      link: placeholderLink
+    },
+    { 
+      id: 4, 
+      title: t.t4_title, 
+      subtitle: t.t4_sub, 
+      time: "06:30",
+      image: "https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=2070&auto=format&fit=crop", // Morning/Sunrise
+      link: placeholderLink
+    }
   ];
 
   const events = [
@@ -452,7 +480,7 @@ const App = () => {
 
       <MotifSeparator />
 
-      {/* Music Grid (Fuller) */}
+      {/* Music Grid (YouTube Style Cards) */}
       <section id="music" className="py-24 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-end mb-16">
@@ -462,26 +490,39 @@ const App = () => {
             </a>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-8">
             {tracks.map((track) => (
-              <div 
+              <a 
                 key={track.id}
-                onClick={() => toggleSongPlay(track.id)}
-                className={`group cursor-pointer p-8 border rounded-2xl transition-all duration-500 hover:scale-[1.02] ${isNightMode ? 'border-[#334155] hover:bg-[#1E293B] bg-[#0F172A]' : 'border-[#FED7AA] hover:shadow-xl bg-[#FFFBEB]'} ${currentSong === track.id ? (isNightMode ? 'border-[#D97706]' : 'border-[#D97706]') : ''}`}
+                href={track.link}
+                target="_blank"
+                rel="noreferrer"
+                className={`group block p-4 border rounded-2xl transition-all duration-500 hover:scale-[1.02] ${isNightMode ? 'border-[#334155] hover:bg-[#1E293B] bg-[#0F172A]' : 'border-[#FED7AA] hover:shadow-xl bg-[#FFFBEB]'}`}
               >
-                <div className="flex justify-between items-start">
-                  <div className="flex gap-6">
-                    <button className={`w-14 h-14 rounded-full flex items-center justify-center transition-all ${currentSong === track.id ? 'bg-[#D97706] text-white' : (isNightMode ? 'bg-[#1E293B] text-white' : 'bg-[#FEF3C7] text-[#451a03]')}`}>
-                      {currentSong === track.id && isSongPlaying ? <Pause size={20} /> : <Play size={20} className="ml-1" />}
-                    </button>
-                    <div>
-                      <h3 className={`text-2xl font-base-${lang} mb-2`}>{track.title}</h3>
-                      <p className={`text-xs uppercase tracking-widest ${isNightMode ? 'text-indigo-300' : 'text-[#92400e]'}`}>{track.subtitle}</p>
+                {/* Thumbnail Container */}
+                <div className="relative aspect-video rounded-xl overflow-hidden mb-6 shadow-md">
+                  <img src={track.image} alt={track.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  
+                  {/* Play Button Overlay */}
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div className={`w-16 h-16 rounded-full flex items-center justify-center backdrop-blur-sm transition-all transform group-hover:scale-110 ${isNightMode ? 'bg-white/10 text-white' : 'bg-white/30 text-white'}`}>
+                      <Play size={32} fill="currentColor" className="ml-1" />
                     </div>
                   </div>
-                  <span className="font-mono text-sm opacity-50">{track.time}</span>
+                  
+                  {/* Duration Label */}
+                  <div className="absolute bottom-4 right-4 bg-black/70 text-white text-xs font-bold px-2 py-1 rounded">
+                    {track.time}
+                  </div>
                 </div>
-              </div>
+
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className={`text-2xl font-base-${lang} mb-2 group-hover:text-[#D97706] transition-colors`}>{track.title}</h3>
+                    <p className={`text-xs uppercase tracking-widest ${isNightMode ? 'text-indigo-300' : 'text-[#92400e]'}`}>{track.subtitle}</p>
+                  </div>
+                </div>
+              </a>
             ))}
           </div>
         </div>
