@@ -5,6 +5,29 @@ import { Play, Pause, X, Menu, Music, ArrowRight, Instagram, Youtube, Mail, MapP
 const DATA_URL = "https://api.npoint.io/351d4f48fd1c2ad3df3b";
 const DEFAULT_YT_LINK = "https://youtube.com/@aishwaryamahesh6605";
 
+// --- MOCK DATA FOR PREVIEW (Ensures UI looks good even if API fails) ---
+const INITIAL_DATA = {
+  events: [
+    { date: "OCT 24, 2025", loc: "CHENNAI", venue: "Music Academy", link: "#" },
+    { date: "NOV 12, 2025", loc: "BANGALORE", venue: "Chowdiah Hall", link: "#" },
+    { date: "DEC 01, 2025", loc: "MUMBAI", venue: "NCPA", link: "#" }
+  ],
+  tracks: [
+    { id: 1, title: "Vathapi Ganapathim", subtitle: "Hamsadhwani • Adi", time: "6:45", image: "https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=800&auto=format&fit=crop", link: "#" },
+    { id: 2, title: "Endaro Mahanubhavulu", subtitle: "Sri • Adi", time: "12:30", image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=800&auto=format&fit=crop", link: "#" },
+    { id: 3, title: "Krishna Nee Begane", subtitle: "Yamunakalyani • Misra Chapu", time: "5:20", image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=800&auto=format&fit=crop", link: "#" },
+    { id: 4, title: "Thillana", subtitle: "Dhanashree • Adi", time: "4:15", image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?q=80&w=800&auto=format&fit=crop", link: "#" }
+  ],
+  contact: { 
+    email: "contact@aishwaryamahesh.com", 
+    instagram: DEFAULT_YT_LINK, 
+    youtube: DEFAULT_YT_LINK, 
+    facebook: "#", 
+    websiteBy: "RagaDesigns", 
+    websiteByLink: "#" 
+  }
+};
+
 // --- FONTS & STYLES ---
 const GlobalStyles = () => (
   <style>{`
@@ -39,13 +62,22 @@ const GlobalStyles = () => (
     }
     .animate-slide-up { animation: slide-up 0.5s ease-out forwards; }
 
+    /* Updated Swing Animation - Stronger Movement */
     @keyframes swing {
       0% { transform: rotate(0deg); }
-      25% { transform: rotate(5deg); }
-      75% { transform: rotate(-5deg); }
+      25% { transform: rotate(15deg); }
+      75% { transform: rotate(-15deg); }
       100% { transform: rotate(0deg); }
     }
-    .tassel-swing { transform-origin: top center; animation: swing 3s ease-in-out infinite; }
+    .tassel-swing { transform-origin: top center; animation: swing 3.5s ease-in-out infinite; }
+    
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
   `}</style>
 );
 
@@ -61,10 +93,10 @@ const translations = {
     tagline: "Attempting to find the perfect Sruti since 2010.",
     soundOn: "Sound On", soundOff: "Sound Off", menu: "Menu", liveAt: "Live at Chennai", watchHighlights: "Watch Highlights", followInsta: "Follow Journey", designedBy: "Designed with Raga & Rhythm", upcoming: "Upcoming Event", getTickets: "Get Tickets"
   },
-  kn: { about: "ಪರಿಚಯ", music: "ಸಂಗೀತ", events: "ಕಾರ್ಯಕ್ರಮಗಳು", contact: "ಸಂಪರ್ಕ", listen: "ಕೇಳಿ", type: "ಕರ್ನಾಟಿಕ್ ಶಾಸ್ತ್ರೀಯ ಸಂಗೀತ", tagline: "2010 ರಿಂದ ಸರಿಯಾದ ಶ್ರುತಿಗಾಗಿ ಹುಡುಕಾಟ.", soundOn: "ಧ್ವನಿ ಆನ್", soundOff: "ಧ್ವನಿ ಆಫ್", menu: "ಮೆನು", works: "ಆಯ್ದ ಕೃತಿಗಳು", performances: "ಪ್ರದರ್ಶನಗಳು", explore: "ಅನ್ವೇಷಿಸಿ", connect: "ಸಂಪರ್ಕಿಸಿ", upcoming: "ಮುಂದಿನ ಕಾರ್ಯಕ್ರಮ", getTickets: "ಟಿಕೆಟ್ ಪಡೆಯಿರಿ" },
-  hi: { about: "परिचय", music: "संगीत", events: "कार्यक्रम", contact: "संपर्क", listen: "अभी सुनें", type: "कर्नाटक शास्त्रीय संगीत", soundOn: "ध्वनि चालु", soundOff: "ध्वनि बंद", menu: "मेन्यू", works: "चयनित कृतियां", performances: "प्रस्तुतियां", explore: "खोजें", connect: "जुड़ें", upcoming: "आगामी कार्यक्रम", getTickets: "टिकट प्राप्त करें" },
-  ta: { about: "அறிமுகம்", music: "இசை", events: "நிகழ்வுகள்", contact: "தொடர்பு", listen: "கேளுங்கள்", type: "கர்நாடக இசை", soundOn: "ஒலி ஆன்", soundOff: "ஒலி ஆஃப்", menu: "மெனு", works: "படைப்புகள்", performances: "நிகழ்ச்சிகள்", upcoming: "வரவிருக்கும் நிகழ்வு", getTickets: "டிக்கெட் பெறுங்கள்" },
-  te: { about: "పరిచయం", music: "సంగీతం", events: "కార్యక్రమాలు", contact: "సంప్రదించండి", listen: "వినండి", type: "కర్ణాటక సంగీతం", soundOn: "సౌండ్ ఆన్", soundOff: "సౌండ్ ఆఫ్", menu: "మెనూ", works: "కృతులు", performances: "ప్రదర్శనలు", upcoming: "రాబోయే కార్యక్రమం", getTickets: "టిక్కెట్లు పొందండి" }
+  kn: { name: "ಐಶ್ವರ್ಯ ಮಹೇಶ್", about: "ಪರಿಚಯ", music: "ಸಂಗೀತ", events: "ಕಾರ್ಯಕ್ರಮಗಳು", contact: "ಸಂಪರ್ಕ", listen: "ಕೇಳಿ", type: "ಕರ್ನಾಟಿಕ್ ಶಾಸ್ತ್ರೀಯ ಸಂಗೀತ", tagline: "2010 ರಿಂದ ಸರಿಯಾದ ಶ್ರುತಿಗಾಗಿ ಹುಡುಕಾಟ.", soundOn: "ಧ್ವನಿ ಆನ್", soundOff: "ಧ್ವನಿ ಆಫ್", menu: "ಮೆನು", works: "ಆಯ್ದ ಕೃತಿಗಳು", performances: "ಪ್ರದರ್ಶನಗಳು", explore: "ಅನ್ವೇಷಿಸಿ", connect: "ಸಂಪರ್ಕಿಸಿ", upcoming: "ಮುಂದಿನ ಕಾರ್ಯಕ್ರಮ", getTickets: "ಟಿಕೆಟ್ ಪಡೆಯಿರಿ" },
+  hi: { name: "ऐश्वर्या महेश", about: "परिचय", music: "संगीत", events: "कार्यक्रम", contact: "संपर्क", listen: "अभी सुनें", type: "कर्नाटक शास्त्रीय संगीत", soundOn: "ध्वनि चालु", soundOff: "ध्वनि बंद", menu: "मेन्यू", works: "चयनित कृतियां", performances: "प्रस्तुतियां", explore: "खोजें", connect: "जुड़ें", upcoming: "आगामी कार्यक्रम", getTickets: "टिकट प्राप्त करें" },
+  ta: { name: "ஐஸ்வர்யா மகேஷ்", about: "அறிமுகம்", music: "இசை", events: "நிகழ்வுகள்", contact: "தொடர்பு", listen: "கேளுங்கள்", type: "கர்நாடக இசை", soundOn: "ஒலி ஆன்", soundOff: "ஒலி ஆஃப்", menu: "மெனு", works: "படைப்புகள்", performances: "நிகழ்ச்சிகள்", upcoming: "வரவிருக்கும் நிகழ்வு", getTickets: "டிக்கெட் பெறுங்கள்" },
+  te: { name: "ఐశ్వర్య మహేష్", about: "పరిచయం", music: "సంగీతం", events: "కార్యక్రమాలు", contact: "సంప్రదించండి", listen: "వినండి", type: "కర్ణాటక సంగీతం", soundOn: "సౌండ్ ఆన్", soundOff: "సౌండ్ ఆఫ్", menu: "మెనూ", works: "కృతులు", performances: "ప్రదర్శనలు", upcoming: "రాబోయే కార్యక్రమం", getTickets: "టిక్కెట్లు పొందండి" }
 };
 
 // --- HELPER COMPONENTS ---
@@ -85,7 +117,6 @@ const MotifSeparator = ({ isNightMode }) => (
   </div>
 );
 
-// Organic/Hand-drawn Mandala - Adjusted Opacity
 const MandalaBg = ({ isNightMode }) => (
   <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-1000 ${isNightMode ? 'opacity-[0.05]' : 'opacity-[0.15]'}`}>
     <svg className={`w-[140vh] h-[140vh] animate-[spin_180s_linear_infinite] ${isNightMode ? 'text-white' : 'text-[#78350F]'}`} viewBox="0 0 200 200">
@@ -105,38 +136,14 @@ const MandalaBg = ({ isNightMode }) => (
   </div>
 );
 
-const MinimalFrame = ({ isNightMode, scrolled }) => {
-  const color = isNightMode ? '#fb923c' : '#D97706';
-  const size = scrolled ? "w-24 h-24 opacity-0 scale-95" : "w-24 h-24 md:w-48 md:h-48 opacity-100 scale-100";
-  // Fixed overlap: Changed z-index from z-[45] to z-[5] to sit behind text
-  return (
-    <div className={`fixed inset-0 pointer-events-none z-[5] hidden md:block transition-all duration-1000 ease-in-out ${scrolled ? 'pointer-events-none' : ''}`}>
-       {[0, 90, 180, 270].map((rot, i) => (
-         <svg key={i} className={`absolute ${size} transition-all duration-1000 m-6`} style={{ top: i < 2 ? 0 : 'auto', bottom: i >= 2 ? 0 : 'auto', left: (i === 0 || i === 3) ? 0 : 'auto', right: (i === 1 || i === 2) ? 0 : 'auto', transform: `rotate(${rot}deg)` }} viewBox="0 0 100 100" fill="none" stroke={color} strokeWidth="1.5">
-            <path d="M2 100 L 2 40 Q 2 2 40 2 L 100 2" fill="none" strokeLinecap="round" />
-            {!scrolled && <circle cx="18" cy="18" r="4" fill={color} />}
-         </svg>
-       ))}
-    </div>
-  );
-};
-
-const TasselBorder = ({ scrolled }) => (
-  <div className={`fixed inset-0 z-0 pointer-events-none hidden md:flex justify-between transition-opacity duration-1000 ${scrolled ? "opacity-0" : "opacity-100"}`}>
-     {[0, 1].map(side => (
-       <div key={side} className={`h-full w-12 relative ${side ? 'transform scale-x-[-1]' : ''}`}>
-          <svg height="100%" width="20" preserveAspectRatio="none" viewBox="0 0 20 100" className="text-[#D97706] opacity-30 block h-full absolute left-0">
-             <path d="M0 0 Q 20 5 0 10 Q 20 15 0 20 Q 20 25 0 30 Q 20 35 0 40 Q 20 45 0 50 Q 20 55 0 60 Q 20 65 0 70 Q 20 75 0 80 Q 20 85 0 90 Q 20 95 0 100" fill="none" stroke="currentColor" strokeWidth="1.5" />
-          </svg>
-          <div className="absolute top-0 left-0 h-full w-full flex flex-col justify-around py-12">
-             {[...Array(6)].map((_, i) => (
-                <div key={i} className="w-0.5 h-20 bg-[#D97706]/40 ml-2 tassel-swing origin-top relative">
-                   <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#D97706]"></div>
-                </div>
-             ))}
-          </div>
-       </div>
-     ))}
+// --- STATIC MENU TORAN ---
+const MenuToran = () => (
+  <div className="w-full absolute top-0 left-0 z-20 pointer-events-none overflow-hidden">
+     <div className="w-full h-24 opacity-80" style={{
+         backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 Q 30 15 60 0' stroke='%23D97706' stroke-width='1.5' fill='none'/%3E%3Cpath d='M15 5 V 20 Q 5 35 15 50 Q 25 35 15 20' fill='%23D97706' fill-opacity='0.2' stroke='%23D97706' stroke-width='1.5'/%3E%3Cpath d='M45 5 V 20 Q 35 35 45 50 Q 55 35 45 20' fill='%23D97706' fill-opacity='0.2' stroke='%23D97706' stroke-width='1.5'/%3E%3Ccircle cx='15' cy='12' r='2' fill='%23D97706'/%3E%3Ccircle cx='45' cy='12' r='2' fill='%23D97706'/%3E%3C/svg%3E")`,
+         backgroundRepeat: 'repeat-x',
+         backgroundPosition: 'top center'
+     }}></div>
   </div>
 );
 
@@ -252,16 +259,23 @@ const App = () => {
   const [isNightMode, setIsNightMode] = useState(false);
   const [lang, setLang] = useState('en');
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
-  const [data, setData] = useState({ 
-    events: [{ date: "COMING SOON", loc: "...", venue: "...", link: DEFAULT_YT_LINK }],
-    tracks: [],
-    contact: { email: "contact@aishwaryamahesh.com", instagram: DEFAULT_YT_LINK, youtube: DEFAULT_YT_LINK, facebook: "#", websiteBy: "Name", websiteByLink: "#" }
-  });
+  
+  // Changed default to a remote URL for preview
+  const [portraitImage, setPortraitImage] = useState('src/assets/portrait.png'); 
+  const [imageError, setImageError] = useState(false);
+
+  const [data, setData] = useState(INITIAL_DATA);
 
   const { isPlaying: isDronePlaying, toggle: toggleDrone } = useTanpura();
 
   useEffect(() => {
-    fetch(DATA_URL).then(res => res.json()).then(json => setData(json)).catch(e => console.log("npoint error"));
+    fetch(DATA_URL).then(res => res.json()).then(json => {
+        if (json) {
+            setData(json);
+            if (json.portrait) setPortraitImage(json.portrait); 
+        }
+    }).catch(e => console.log("Using mock data due to fetch error"));
+    
     const handleScroll = () => setScrolled(window.scrollY > 100);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -270,14 +284,17 @@ const App = () => {
   const t = translations[lang] || translations['en'];
   const scrollTo = (id) => { setIsMenuOpen(false); setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }), 500); };
 
+  const handleImageError = () => {
+      // Fallback if the main portrait fails
+      setPortraitImage('https://images.unsplash.com/photo-1621886888495-2315b8004f81?q=80&w=1000&auto=format&fit=crop');
+  };
+
   return (
     <div className={`min-h-screen font-base-${lang} transition-colors duration-1000 overflow-x-hidden relative ${isNightMode ? 'bg-[#0B1221] text-[#E0E7FF]' : 'bg-[#FDFBF7] text-[#422006]'}`}>
       <GlobalStyles />
       <div className={`fixed inset-0 opacity-[0.08] pointer-events-none z-0 bg-pattern ${isNightMode ? 'invert opacity-[0.05]' : ''}`}></div>
       <CustomCursor isDark={isNightMode} />
-      <MinimalFrame isNightMode={isNightMode} scrolled={scrolled} />
-      <TasselBorder scrolled={scrolled} />
-
+      
       {showEventToast && data.events.length > 0 && (
         <div className={`fixed bottom-8 right-8 z-[60] p-6 max-w-xs shadow-2xl border-l-4 border-[#D97706] animate-slide-up hidden md:block ${isNightMode ? 'bg-[#0B1221]' : 'bg-[#451a03] text-[#FEF3C7]'}`}>
           <button onClick={() => setShowEventToast(false)} className="absolute top-2 right-2 opacity-50 hover:opacity-100"><X size={14} /></button>
@@ -292,8 +309,50 @@ const App = () => {
 
       <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? (isNightMode ? 'bg-[#0B1221]/95 border-[#1e293b]' : 'bg-[#FDFBF7]/95 border-[#e7e5e4]') + ' backdrop-blur-md py-4 border-b' : 'py-8'}`}>
         <div className="container mx-auto px-8 flex justify-between items-center">
-          <span onClick={() => scrollTo('home')} className="text-xl tracking-[0.2em] font-base-${lang} font-bold cursor-pointer uppercase">AISHWARYA<span className="text-[#D97706]">.</span></span>
+          <span onClick={() => scrollTo('home')} className={`text-xl tracking-[0.2em] font-base-${lang} font-bold cursor-pointer uppercase`}>AISHWARYA<span className="text-[#D97706]">.</span></span>
+          
+          <div className="hidden lg:flex items-center gap-12 absolute left-1/2 transform -translate-x-1/2">
+             {['about', 'music', 'events', 'contact'].map((item) => (
+               <button 
+                 key={item} 
+                 onClick={() => scrollTo(item)} 
+                 className={`text-xs font-bold tracking-[0.2em] uppercase hover:text-[#D97706] transition-colors ${isNightMode ? 'text-[#E0E7FF]' : 'text-[#451a03]'}`}
+               >
+                 {t[item]}
+               </button>
+             ))}
+          </div>
+
           <div className="flex items-center gap-4">
+            <div className="relative">
+              <button 
+                onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
+                className={`flex items-center gap-2 hover:text-[#D97706] transition-colors p-2 text-xs font-bold uppercase tracking-widest ${isNightMode ? 'text-indigo-300' : 'text-[#422006]'}`}
+              >
+                <Globe size={16} /> <span>{lang}</span>
+              </button>
+              
+              {isLangMenuOpen && (
+                <div className={`absolute top-full right-0 mt-2 py-2 rounded-xl shadow-xl min-w-[120px] z-50 border ${isNightMode ? 'bg-[#1e293b] border-[#334155]' : 'bg-[#FFFBEB] border-[#FDE68A]'}`}>
+                  {[
+                    { code: 'en', label: 'English' },
+                    { code: 'kn', label: 'ಕನ್ನಡ' },
+                    { code: 'ta', label: 'தமிழ்' },
+                    { code: 'hi', label: 'हिंदी' },
+                    { code: 'te', label: 'తెలుగు' }
+                  ].map((l) => (
+                    <button
+                      key={l.code}
+                      onClick={() => { setLang(l.code); setIsLangMenuOpen(false); }}
+                      className={`block w-full text-left px-4 py-2 text-sm hover:text-[#D97706] hover:bg-black/5 ${lang === l.code ? 'text-[#D97706] font-bold' : ''}`}
+                    >
+                      {l.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <div className="hidden md:flex gap-4">
                <button onClick={toggleDrone} className={`flex items-center gap-2 text-xs font-bold uppercase hover:text-[#D97706] border px-4 py-2 rounded-full ${isDronePlaying ? 'border-[#D97706] text-[#D97706]' : 'border-stone-300'}`}>
                  {isDronePlaying ? <Volume2 size={14} /> : <VolumeX size={14} />} {isDronePlaying ? t.soundOn : t.soundOff}
@@ -305,11 +364,16 @@ const App = () => {
         </div>
       </nav>
 
+      {/* REVERTED MENU CURTAINS - SLIDING CURTAINS + TASSELS */}
       <div className={`fixed inset-0 z-[60] pointer-events-none flex ${isMenuOpen ? 'pointer-events-auto' : ''}`}>
-        <div className={`relative w-1/2 h-full transition-transform duration-1000 ease-in-out transform ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} ${isNightMode ? 'bg-[#0B1221]' : 'bg-[#451a03]'}`}>
+        {/* Left Curtain */}
+        <div className={`relative w-1/2 h-full transition-transform duration-1000 ease-in-out transform ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} ${isNightMode ? 'bg-[#0B1221]' : 'bg-[#451a03]'} flex items-center justify-end`}>
            <div className="absolute right-0 h-full transform translate-x-full z-10">
-              <svg height="100%" width="20" preserveAspectRatio="none" viewBox="0 0 20 100" className={`block ${isNightMode ? 'text-[#0B1221]' : 'text-[#451a03]'}`}><path d="M0 0 Q 20 5 0 10 Q 20 15 0 20 Q 20 25 0 30 Q 20 35 0 40 Q 20 45 0 50 Q 20 55 0 60 Q 20 65 0 70 Q 20 75 0 80 Q 20 85 0 90 Q 20 95 0 100" fill="currentColor" /></svg>
-              <div className="absolute top-0 left-0 h-full w-4 flex flex-col justify-around">
+              <svg height="100%" width="20" preserveAspectRatio="none" viewBox="0 0 20 100" className={`block ${isNightMode ? 'text-[#0B1221]' : 'text-[#451a03]'}`}>
+                 <path d="M0 0 Q 20 5 0 10 Q 20 15 0 20 Q 20 25 0 30 Q 20 35 0 40 Q 20 45 0 50 Q 20 55 0 60 Q 20 65 0 70 Q 20 75 0 80 Q 20 85 0 90 Q 20 95 0 100" fill="currentColor" />
+              </svg>
+              {/* Tassels attached to scalloped edge - Fades out when menu opens */}
+              <div className={`absolute top-0 left-0 h-full w-4 flex flex-col justify-around transition-opacity duration-500 ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`}>
                  {[...Array(8)].map((_, i) => (
                     <div key={i} className="w-1 h-12 bg-[#D97706]/60 mx-auto tassel-swing origin-top relative">
                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#D97706]"></div>
@@ -318,10 +382,15 @@ const App = () => {
               </div>
            </div>
         </div>
-        <div className={`relative w-1/2 h-full transition-transform duration-1000 ease-in-out transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} ${isNightMode ? 'bg-[#0B1221]' : 'bg-[#451a03]'}`}>
+        
+        {/* Right Curtain */}
+        <div className={`relative w-1/2 h-full transition-transform duration-1000 ease-in-out transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} ${isNightMode ? 'bg-[#0B1221]' : 'bg-[#451a03]'} flex items-center justify-start`}>
            <div className="absolute left-0 h-full transform -translate-x-full z-10 scale-x-[-1]">
-              <svg height="100%" width="20" preserveAspectRatio="none" viewBox="0 0 20 100" className={`block ${isNightMode ? 'text-[#0B1221]' : 'text-[#451a03]'}`}><path d="M0 0 Q 20 5 0 10 Q 20 15 0 20 Q 20 25 0 30 Q 20 35 0 40 Q 20 45 0 50 Q 20 55 0 60 Q 20 65 0 70 Q 20 75 0 80 Q 20 85 0 90 Q 20 95 0 100" fill="currentColor" /></svg>
-              <div className="absolute top-0 left-0 h-full w-4 flex flex-col justify-around">
+              <svg height="100%" width="20" preserveAspectRatio="none" viewBox="0 0 20 100" className={`block ${isNightMode ? 'text-[#0B1221]' : 'text-[#451a03]'}`}>
+                 <path d="M0 0 Q 20 5 0 10 Q 20 15 0 20 Q 20 25 0 30 Q 20 35 0 40 Q 20 45 0 50 Q 20 55 0 60 Q 20 65 0 70 Q 20 75 0 80 Q 20 85 0 90 Q 20 95 0 100" fill="currentColor" />
+              </svg>
+              {/* Tassels - Fades out when menu opens */}
+              <div className={`absolute top-0 left-0 h-full w-4 flex flex-col justify-around transition-opacity duration-500 ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`}>
                  {[...Array(8)].map((_, i) => (
                     <div key={i} className="w-1 h-12 bg-[#D97706]/60 mx-auto tassel-swing origin-top relative" style={{animationDelay: '0.5s'}}>
                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#D97706]"></div>
@@ -330,11 +399,16 @@ const App = () => {
               </div>
            </div>
         </div>
+
+        {/* Menu Content (Centered Overlay with Close Button) */}
         <div className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-500 delay-300 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+           <MenuToran />
            <button onClick={() => setIsMenuOpen(false)} className="absolute top-8 right-8 text-[#D97706] z-[70] cursor-pointer"><X size={32} /></button>
+           
            <div className="text-center space-y-6">
-            {['about', 'music', 'events', 'contact'].map(item => <button key={item} onClick={() => scrollTo(item)} className="block text-4xl md:text-7xl font-base-${lang} text-[#FEF3C7] hover:text-[#D97706] capitalize transition-colors">{t[item]}</button>)}
+            {['about', 'music', 'events', 'contact'].map(item => <button key={item} onClick={() => scrollTo(item)} className={`block text-4xl md:text-7xl font-base-${lang} text-[#FEF3C7] hover:text-[#D97706] capitalize transition-colors`}>{t[item]}</button>)}
           </div>
+
           <div className="flex flex-col items-center gap-6 mt-12">
              <button onClick={toggleDrone} className="flex items-center gap-2 text-xs font-bold uppercase border px-6 py-3 rounded-full text-[#FEF3C7] border-[#FEF3C7] hover:border-[#D97706] transition-all">
               {isDronePlaying ? <Volume2 size={16} /> : <VolumeX size={16} />} <span>{isDronePlaying ? t.soundOn : t.soundOff}</span>
@@ -368,7 +442,22 @@ const App = () => {
       <section id="about" className="py-32 px-6 md:px-12 max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row gap-16 items-center">
           <div className="md:w-1/2 relative">
-            <div className={`relative z-10 aspect-[3/4] overflow-hidden rounded-t-full rounded-b-2xl shadow-2xl flex items-center justify-center ${isNightMode ? 'bg-[#1E293B]' : 'bg-[#FFFBEB]'}`}><div className="text-center p-8 opacity-30 text-6xl font-base-${lang}">A</div></div>
+            <div className={`relative z-10 aspect-[3/4] overflow-hidden rounded-t-full rounded-b-2xl shadow-2xl flex items-center justify-center ${isNightMode ? 'bg-[#1E293B]' : 'bg-[#FFFBEB]'}`}>
+               {/* Image with fallback */}
+               {portraitImage && !imageError ? (
+                   <img 
+                      src={portraitImage} 
+                      alt="Portrait" 
+                      className="w-full h-full object-cover" 
+                      onError={handleImageError}
+                   /> 
+               ) : (
+                   <div className="text-center p-8 opacity-30">
+                       <div className={`text-6xl mb-4 font-base-${lang} ${isNightMode ? 'text-[#E0E7FF]' : 'text-[#78350F]'}`}>A</div>
+                       <p className={`uppercase tracking-widest text-xs ${isNightMode ? 'text-[#E0E7FF]' : 'text-[#78350F]'}`}>Portrait</p>
+                   </div>
+               )}
+            </div>
             <div className="absolute top-4 -left-4 w-full h-full border-2 border-[#D97706]/30 rounded-t-full rounded-b-2xl z-0"></div>
           </div>
           <div className="md:w-1/2">
@@ -387,7 +476,7 @@ const App = () => {
 
       <section id="music" className="py-24 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-end mb-16"><h2 className="text-4xl md:text-5xl font-base-${lang}">{t.works}</h2><a href={data.contact.youtube} target="_blank" rel="noreferrer" className="hidden md:flex items-center gap-2 text-xs tracking-widest uppercase hover:text-[#D97706]">{t.viewAll} <ArrowRight size={14} /></a></div>
+          <div className="flex justify-between items-end mb-16"><h2 className={`text-4xl md:text-5xl font-base-${lang}`}>{t.works}</h2><a href={data.contact.youtube} target="_blank" rel="noreferrer" className="hidden md:flex items-center gap-2 text-xs tracking-widest uppercase hover:text-[#D97706]">{t.viewAll} <ArrowRight size={14} /></a></div>
           <div className="grid md:grid-cols-2 gap-8">
             {data.tracks.map(track => (
               <a key={track.id} href={track.link} target="_blank" rel="noreferrer" className={`group block p-4 border rounded-2xl transition-all hover:scale-[1.02] ${isNightMode ? 'border-[#334155] bg-[#0F172A]' : 'border-[#FED7AA] bg-[#FFFBEB]'}`}>
@@ -437,7 +526,7 @@ const App = () => {
         </div>
       </section>
 
-      <footer className={`py-24 px-6 ${isNightMode ? 'bg-[#020617] text-stone-400' : 'bg-[#451a03] text-[#FED7AA]'}`}>
+      <footer id="contact" className={`py-24 px-6 ${isNightMode ? 'bg-[#020617] text-stone-400' : 'bg-[#451a03] text-[#FED7AA]'}`}>
         <div className="max-w-6xl mx-auto grid md:grid-cols-4 gap-12">
           <div className="col-span-2"><h2 className="text-3xl text-white mb-6 uppercase tracking-widest">{t.name}</h2><p className="max-w-md leading-relaxed mb-8">{t.desc}</p><a href={`mailto:${data.contact.email}`} className="text-[#D97706] hover:text-white text-lg transition-colors">{data.contact.email}</a></div>
           <div><h4 className="text-white text-xs font-bold uppercase mb-6">{t.explore}</h4><ul className="space-y-4 text-sm">{['about', 'music', 'events'].map(item => <li key={item}><button onClick={() => scrollTo(item)} className="hover:text-[#D97706] transition-colors capitalize">{t[item]}</button></li>)}</ul></div>
