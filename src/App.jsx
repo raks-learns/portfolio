@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Play, Pause, X, Menu, Music, ArrowRight, Instagram, Youtube, Mail, MapPin, Ticket, Volume2, VolumeX, Quote, Globe, Sun, Moon } from 'lucide-react';
+import { Play, Pause, X, Menu, Music, ArrowRight, Instagram, Youtube, Mail, MapPin, Ticket, Volume2, VolumeX, Quote, Globe, Sun, Moon, Briefcase, Mic2, ChevronRight } from 'lucide-react';
 
 // --- CONFIGURATION ---
 const DATA_URL = "https://api.npoint.io/351d4f48fd1c2ad3df3b";
@@ -28,15 +28,30 @@ const INITIAL_DATA = {
   }
 };
 
+// --- IMAGE COLLECTIONS FOR SLIDESHOWS ---
+const LINEAGE_IMAGES = [
+ "src/assets/test_img1.png",
+ "src/assets/test_img2.png",
+ "src/assets/test_img3.png"
+];
+
+const MASTERY_IMAGES = [
+  "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?q=80&w=800&auto=format&fit=crop", // Microphone
+  "https://images.unsplash.com/photo-1507838153414-b4b713384ebd?q=80&w=800&auto=format&fit=crop", // Sheet Music/Notes
+  "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=800&auto=format&fit=crop"  // Concert Lights
+];
+
 // --- FONTS & STYLES ---
 const GlobalStyles = () => (
   <style>{`
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Proza+Libre:wght@400;500&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Kannada:wght@400;700&family=Noto+Serif+Tamil:wght@400;700&family=Noto+Serif+Telugu:wght@400;700&family=Rozha+One&family=Sahitya:wght@400;700&display=swap');
-    
+    @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+
     .font-base-en { font-family: 'Cormorant Garamond', serif; }
     .text-base-en { font-family: 'Proza Libre', sans-serif; letter-spacing: 0.02em; }
     .font-indian-style { font-family: 'Rozha One', serif; }
+    .font-comic { font-family: 'Comic Neue', cursive; }
 
     .font-base-hi { font-family: 'Rozha One', serif; }
     .text-base-hi { font-family: 'Sahitya', serif; }
@@ -78,19 +93,50 @@ const GlobalStyles = () => (
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
+
+    /* Sound Wave Animation */
+    @keyframes soundwave {
+      0% { height: 4px; opacity: 0.3; }
+      50% { height: 24px; opacity: 1; }
+      100% { height: 4px; opacity: 0.3; }
+    }
+    .wave-bar { animation: soundwave 1.2s ease-in-out infinite; }
   `}</style>
 );
 
 const translations = {
   en: {
     name: "Aishwarya Mahesh",
-    about: "About", music: "Music", events: "Events", contact: "Contact", listen: "Listen Now",
-    type: "CARNATIC CLASSICAL", quote: "Music is not just performance. It is an excuse to close your eyes and ignore everyone.",
-    sadhana: "The Sadhana", training: "Years of Training", concerts: "Concerts Survived", works: "Selected Works",
+    about: "The Journey", 
+    music: "Music", events: "Events", contact: "Contact", listen: "Listen Now",
+    type: "CARNATIC CLASSICAL", 
+    quote: "Music is not just an art, it is a way of life; it does not always have to have structure, let it flow!",
+    sadhana: "The Sadhana", 
+    training: "Years of Training", concerts: "Concerts Survived", works: "Selected Works",
     viewAll: "View All", performances: "Performances", details: "View Details", explore: "Explore", connect: "Connect",
-    desc: "Communicating authentic Carnatic music to the soul.",
-    artistAbout: "I am a passionate student of Carnatic Music who firmly believes that 'Sa' is the answer to most of life's problems. I seek to communicate to people through music, mostly because I'm better at singing than talking.",
-    tagline: "Attempting to find the perfect Sruti since 2010.",
+    desc: "Aishwarya Mahesh embodies the essence of Carnatic tradition while pursuing a dynamic professional life in finance.",
+    
+    // --- UPDATED NARRATIVE CONTENT ---
+    aboutTitle: "Meet Aishwarya",
+    
+    // Block 1: Introduction & Philosophy
+    bioBlock1: "Born into a musically vibrant family—where her father, aunts, uncles, and even mother nurtured her early exposure to shlokas, bhajans, and various forms of rhythm—she began formal training at age of 4, reciting Narayaneeyam with precise diction. My philosophy echoes my mother's advice: \"Always emote with your music,\" ensuring every sonic note conveys profound bhava. This dual life—finance by day, music eternal—is what drives my perseverance, and the want to be a better version of myself everyday.",
+    
+    // Block 2: Training & Lineage
+    bioBlock2Title: "Musical Lineage & Training",
+    bioBlock2: "Currently under Vidushis Smt. Ranjani and Gayatri, she honed her craft for 14 years under the able guidance of Veena duo Vidushi Smt. Jaysri Jeyaraaj Krishnan and Vidwan Sri. J.T. Jeyaraaj Krishnan of Veenavaadhini Sampradaya Sangit Trust. Training immersed her fully: living with gurus, accompanying their concerts, and absorbing veena nuances that enriched her vocal phrasings. She mastered voice culture via akaara sadhakam on sarali and janta varisais across speeds, enabling fluid brigas, gamakas, and jarus—essential for alapana and neraval. Varnams follow, transitioning to ragam-tanam-pallavi (RTP) practice, where she experiments with swara patterns in rare ragas, honoring the naadam-shruti-swaram-ragam progression central to Carnatic ethos.",
+    
+    // Block 3: Technical Mastery
+    bioBlock3Title: "Technical Mastery",
+    bioBlock3: "Carnatic music, for Aishwarya, begins with shruti's sacred vibration birthing swaras, arranged into ragas that evoke rasa. She distinguishes it from light music: Carnatic demands rigorous aakara for gamaka-heavy embellishments, unlike light music's falsetto agility and raga-nuance fusion. Daily practice layers varnams in Todi or Bhairavi for taanam precision, then RTP in ragas like Kalyani or Shanmukhapriya, weaving korvais with rhythmic complexity. Her repertoire spans kritis by Tyagaraja (e.g., Pancharatna krithis), Muthuswami Dikshitar (as in Dikshitar Utsavam), and Syama Sastri, delivered with layered sangatis that highlight jeeva swaras.",
+
+    // Excerpts for Cards (Shortened for visual balance)
+    cardSparkQuote: "My mother would often jokingly say that I was born with a speaker inside me, because the whole apartment could hear me cry!",
+    cardSparkContext: "A pivotal moment came at age 11 during my debut at Apparswamy Temple in Mylapore.",
+    cardLineageText: "Inherited from great-grandfather Thanjavur Vaidyanatha Iyer. Honed for 14 years under Veena duo Vidushi Smt. Jaysri Jeyaraaj Krishnan & Vidwan Sri. J.T. Jeyaraaj Krishnan.",
+    cardPhilosophyText: "My philosophy echoes my mother's advice: \"Always emote with your music.\" This dual life—finance by day, music eternal—is what drives my perseverance.",
+
+    tagline: "Finance by Day, Music Eternal.",
     soundOn: "Sound On", soundOff: "Sound Off", menu: "Menu", liveAt: "Live at Chennai", watchHighlights: "Watch Highlights", followInsta: "Follow Journey", designedBy: "Designed with Raga & Rhythm", upcoming: "Upcoming Event", getTickets: "Get Tickets"
   },
   kn: { name: "ಐಶ್ವರ್ಯ ಮಹೇಶ್", about: "ಪರಿಚಯ", music: "ಸಂಗೀತ", events: "ಕಾರ್ಯಕ್ರಮಗಳು", contact: "ಸಂಪರ್ಕ", listen: "ಕೇಳಿ", type: "ಕರ್ನಾಟಿಕ್ ಶಾಸ್ತ್ರೀಯ ಸಂಗೀತ", tagline: "2010 ರಿಂದ ಸರಿಯಾದ ಶ್ರುತಿಗಾಗಿ ಹುಡುಕಾಟ.", soundOn: "ಧ್ವನಿ ಆನ್", soundOff: "ಧ್ವನಿ ಆಫ್", menu: "ಮೆನು", works: "ಆಯ್ದ ಕೃತಿಗಳು", performances: "ಪ್ರದರ್ಶನಗಳು", explore: "ಅನ್ವೇಷಿಸಿ", connect: "ಸಂಪರ್ಕಿಸಿ", upcoming: "ಮುಂದಿನ ಕಾರ್ಯಕ್ರಮ", getTickets: "ಟಿಕೆಟ್ ಪಡೆಯಿರಿ" },
@@ -114,6 +160,80 @@ const MotifSeparator = ({ isNightMode }) => (
       </svg>
     </div>
     <div className={`hidden md:block h-px w-24 md:w-96 ${isNightMode ? 'bg-orange-200' : 'bg-stone-400'}`}></div>
+  </div>
+);
+
+const SwaraWave = ({ isNightMode }) => (
+  <div className="flex items-center gap-1 h-8">
+    {[...Array(12)].map((_, i) => (
+      <div 
+        key={i} 
+        className={`w-1 rounded-full wave-bar ${isNightMode ? 'bg-[#D97706]' : 'bg-[#D97706]'}`}
+        style={{ animationDelay: `${i * 0.1}s` }}
+      ></div>
+    ))}
+  </div>
+);
+
+const PlaceholderImg = ({ label, isNightMode, customIcon }) => (
+  <div className={`w-full h-full flex flex-col items-center justify-center border-2 border-dashed rounded-2xl p-8 text-center transition-all hover:border-solid group ${isNightMode ? 'border-white/20 hover:border-[#D97706]' : 'border-stone-300 hover:border-[#D97706]'}`}>
+     <div className="mb-4 opacity-50 group-hover:scale-110 transition-transform">
+       {customIcon || (
+         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+           <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+           <circle cx="8.5" cy="8.5" r="1.5"></circle>
+           <polyline points="21 15 16 10 5 21"></polyline>
+         </svg>
+       )}
+     </div>
+     <p className="text-xs uppercase tracking-widest font-bold opacity-70 mb-2">Image</p>
+     <p className="text-sm italic opacity-50">{label}</p>
+  </div>
+);
+
+// --- NEW AUTO SCROLL FRAME COMPONENT ---
+const AutoScrollFrame = ({ images, interval = 4000 }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, interval);
+    return () => clearInterval(timer);
+  }, [images.length, interval]);
+
+  return (
+    <div className="w-full h-full relative overflow-hidden bg-stone-200">
+      {images.map((img, index) => (
+        <div
+          key={index}
+          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+            index === currentIndex ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          <img src={img} alt={`Slide ${index}`} className="w-full h-full object-cover" />
+        </div>
+      ))}
+      
+      {/* Simple indicators */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        {images.map((_, i) => (
+          <div 
+            key={i} 
+            className={`w-1.5 h-1.5 rounded-full transition-colors duration-300 ${i === currentIndex ? 'bg-white' : 'bg-white/40'}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// --- COMIC FRAME COMPONENT ---
+const ComicFrame = ({ label, isNightMode }) => (
+  <div className={`w-full h-full flex flex-col items-center justify-center bg-white border-4 border-black p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.8)] transform hover:rotate-2 transition-transform duration-300 ${isNightMode ? 'bg-gray-100 text-black' : ''}`}>
+     <div className="w-full h-48 border-2 border-black border-dashed flex items-center justify-center mb-4 bg-gray-50 relative overflow-hidden">
+        <img src="src/assets/baby.png" alt="portrait" className="absolute inset-0 w-full h-full object-cover"/>
+     </div>
   </div>
 );
 
@@ -226,7 +346,16 @@ const CustomCursor = ({ isDark }) => {
     window.addEventListener('resize', resize);
     resize();
     const onMouseMove = (e) => { cursor.current = { x: e.clientX, y: e.clientY }; };
+    const onTouchMove = (e) => { 
+        if(e.touches.length > 0) {
+            cursor.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }; 
+        }
+    };
+
     window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('touchmove', onTouchMove);
+    window.addEventListener('touchstart', onTouchMove);
+
     const swaras = ['ಸ', 'ರಿ', 'ಗ', 'ಮ', 'ಪ', 'ದ', 'ನಿ', 'Sa', 'Ri', 'Ga', 'Ma', 'Pa', 'Da', 'Ni'];
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -245,9 +374,15 @@ const CustomCursor = ({ isDark }) => {
       animationFrameId = requestAnimationFrame(render);
     };
     render();
-    return () => { window.removeEventListener('resize', resize); window.removeEventListener('mousemove', onMouseMove); cancelAnimationFrame(animationFrameId); };
+    return () => { 
+        window.removeEventListener('resize', resize); 
+        window.removeEventListener('mousemove', onMouseMove);
+        window.removeEventListener('touchmove', onTouchMove);
+        window.removeEventListener('touchstart', onTouchMove);
+        cancelAnimationFrame(animationFrameId); 
+    };
   }, [isDark]);
-  return <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 z-[100] md:block hidden" />;
+  return <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 z-[100]" />;
 };
 
 // --- MAIN APP ---
@@ -261,7 +396,7 @@ const App = () => {
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   
   // Changed default to a remote URL for preview
-  const [portraitImage, setPortraitImage] = useState('src/assets/portrait.png'); 
+  const [portraitImage, setPortraitImage] = useState('src/assets/portrait.png');
   const [imageError, setImageError] = useState(false);
 
   const [data, setData] = useState(INITIAL_DATA);
@@ -434,42 +569,118 @@ const App = () => {
       <section className={`py-32 px-6 border-y ${isNightMode ? 'bg-[#0F172A] border-[#1E293B]' : 'bg-[#FFF7ED] border-[#FED7AA]'}`}>
         <div className="max-w-4xl mx-auto text-center relative">
           <Quote size={48} className="absolute -top-12 left-1/2 -translate-x-1/2 opacity-20 text-[#D97706]" />
-          <h3 className={`text-2xl md:text-4xl font-base-${lang} italic mb-8`}>"{t.quote}"</h3>
+          <h3 className={`text-2xl md:text-4xl font-base-${lang} italic mb-8 leading-relaxed`}>"{t.quote}"</h3>
           <div className="flex justify-center"><svg width="100" height="20" viewBox="0 0 100 20" stroke="#D97706"><path d="M0 10 Q 25 20 50 10 T 100 10" fill="none" strokeWidth="2" /></svg></div>
         </div>
       </section>
 
-      <section id="about" className="py-32 px-6 md:px-12 max-w-7xl mx-auto">
+      {/* --- RESTRUCTURED ABOUT SECTION --- */}
+      <section id="about" className="py-24 px-6 md:px-12 max-w-7xl mx-auto space-y-32">
+        
+        {/* ROW 1: THE BEGINNING (HER NOW) -> Image Left, Intro Right */}
         <div className="flex flex-col md:flex-row gap-16 items-center">
-          <div className="md:w-1/2 relative">
-            <div className={`relative z-10 aspect-[3/4] overflow-hidden rounded-t-full rounded-b-2xl shadow-2xl flex items-center justify-center ${isNightMode ? 'bg-[#1E293B]' : 'bg-[#FFFBEB]'}`}>
-               {/* Image with fallback */}
-               {portraitImage && !imageError ? (
-                   <img 
-                      src={portraitImage} 
-                      alt="Portrait" 
-                      className="w-full h-full object-cover" 
-                      onError={handleImageError}
-                   /> 
-               ) : (
-                   <div className="text-center p-8 opacity-30">
-                       <div className={`text-6xl mb-4 font-base-${lang} ${isNightMode ? 'text-[#E0E7FF]' : 'text-[#78350F]'}`}>A</div>
-                       <p className={`uppercase tracking-widest text-xs ${isNightMode ? 'text-[#E0E7FF]' : 'text-[#78350F]'}`}>Portrait</p>
-                   </div>
-               )}
-            </div>
-            <div className="absolute top-4 -left-4 w-full h-full border-2 border-[#D97706]/30 rounded-t-full rounded-b-2xl z-0"></div>
-          </div>
-          <div className="md:w-1/2">
-            <h2 className={`text-6xl font-base-${lang} mb-8 ${isNightMode ? 'text-[#E0E7FF]' : 'text-[#451a03]'}`}>{t.sadhana}</h2>
-            <p className="text-lg leading-loose mb-8 font-light">{t.artistAbout}</p>
-            <div className="grid grid-cols-2 gap-8">
-              {[{v: "15+", l: t.training}, {v: "100+", l: t.concerts}].map((s,i) => (
-                <div key={i} className="p-6 border-l-2 border-[#D97706] bg-stone-50/5"><div className="text-4xl font-bold mb-2">{s.v}</div><div className="text-xs tracking-widest uppercase opacity-60">{s.l}</div></div>
-              ))}
-            </div>
-          </div>
+           <div className="md:w-1/2 relative">
+              <div className="aspect-[4/5] relative rounded-2xl overflow-hidden shadow-2xl">
+                 {/* Current Portrait */}
+                 {portraitImage ? <img src={portraitImage} alt="Portrait" className="w-full h-full object-cover" /> : <div className="w-full h-full bg-stone-200"></div>}
+              </div>
+              {/* Stats Overlay */}
+              <div className="absolute -bottom-10 -right-6 bg-[#D97706] text-white p-6 shadow-xl max-w-xs z-10">
+                 <div className="text-3xl font-bold mb-1">15+ Years</div>
+                 <div className="text-[10px] tracking-widest uppercase opacity-80">Sadhana & Dedication</div>
+              </div>
+           </div>
+           
+           <div className="md:w-1/2">
+             <h2 className={`text-5xl font-base-${lang} mb-8 leading-tight ${isNightMode ? 'text-[#E0E7FF]' : 'text-[#451a03]'}`}>{t.aboutTitle}</h2>
+             <p className="text-lg leading-loose font-light mb-8">{t.bioBlock1}</p>
+           </div>
         </div>
+
+        {/* ROW 2: LINEAGE & TRAINING -> Text Left, Slideshow Right */}
+        <div className="flex flex-col md:flex-row-reverse gap-16 items-center">
+            <div className="md:w-1/2 h-full">
+               <div className="aspect-[4/3] relative rounded-lg overflow-hidden border-2 border-[#D97706]/20 p-2 shadow-lg">
+                  {/* Replaced Placeholder with AutoScrollFrame */}
+                  <AutoScrollFrame images={LINEAGE_IMAGES} />
+               </div>
+            </div>
+
+            <div className="md:w-1/2 text-left">
+               <h2 className={`text-4xl font-base-${lang} mb-6 ${isNightMode ? 'text-[#E0E7FF]' : 'text-[#451a03]'}`}>{t.bioBlock2Title}</h2>
+               <p className="text-lg leading-loose font-light">{t.bioBlock2}</p>
+            </div>
+        </div>
+
+        {/* ROW 3: TECHNICAL MASTERY -> Slideshow Left, Text Right */}
+        <div className="flex flex-col md:flex-row gap-16 items-center">
+            <div className="md:w-1/2 h-full">
+               <div className="aspect-[4/3] relative rounded-lg overflow-hidden border-2 border-[#D97706]/20 p-2 shadow-lg">
+                  {/* Replaced Placeholder with AutoScrollFrame */}
+                  <AutoScrollFrame images={MASTERY_IMAGES} />
+               </div>
+            </div>
+
+            <div className="md:w-1/2 text-left">
+               <h2 className={`text-4xl font-base-${lang} mb-6 ${isNightMode ? 'text-[#E0E7FF]' : 'text-[#451a03]'}`}>{t.bioBlock3Title}</h2>
+               <p className="text-lg leading-loose font-light">{t.bioBlock3}</p>
+            </div>
+        </div>
+
+        {/* PART 4: LIFE CHAPTERS CAROUSEL */}
+        <div>
+           <div className="flex items-center justify-between mb-8 px-2">
+              <h3 className={`text-xl uppercase tracking-widest font-bold ${isNightMode ? 'text-[#D97706]' : 'text-[#92400e]'}`}>Visual Journey</h3>
+              <div className="hidden md:flex items-center gap-2 opacity-50 text-xs uppercase tracking-widest"><span className={isNightMode ? 'text-white' : 'text-black'}>Scroll</span> <ArrowRight size={14} className={isNightMode ? 'text-white' : 'text-black'} /></div>
+           </div>
+
+           <div className="flex overflow-x-auto gap-8 pb-12 snap-x hide-scrollbar -mx-6 px-6 md:mx-0 md:px-0">
+              
+              {/* CARD 1: THE SPARK (COMIC) */}
+              <div className={`min-w-[85vw] md:min-w-[600px] snap-center p-8 rounded-3xl border flex flex-col md:flex-row gap-8 items-center shadow-lg ${isNightMode ? 'bg-[#1e293b] border-white/10' : 'bg-[#FFFBEB] border-[#FED7AA]'}`}>
+                  <div className="w-full md:w-1/2 aspect-square relative transform -rotate-2 hover:rotate-0 transition-transform duration-300">
+                      <ComicFrame label="Childhood Singing" isNightMode={isNightMode} />
+                  </div>
+                  <div className="w-full md:w-1/2">
+                      <h4 className={`text-2xl font-bold mb-4 ${isNightMode ? 'text-white' : 'text-[#451a03]'}`}>The Spark</h4>
+                      <p className={`text-lg italic leading-relaxed mb-4 ${isNightMode ? 'text-indigo-200' : 'text-[#78350F]'}`}>"{t.cardSparkQuote}"</p>
+                      <p className="text-sm opacity-80 leading-relaxed">{t.cardSparkContext}</p>
+                  </div>
+              </div>
+
+              {/* CARD 2: LINEAGE (TRADITION) */}
+              <div className={`min-w-[85vw] md:min-w-[600px] snap-center p-8 rounded-3xl border flex flex-col md:flex-row gap-8 items-center shadow-lg ${isNightMode ? 'bg-[#0f172a] border-white/10' : 'bg-stone-50 border-stone-200'}`}>
+                  <div className="w-full md:w-1/2 aspect-[3/4] relative rounded-t-full overflow-hidden border-4 border-[#D97706]/20 p-2">
+                      <div className="w-full h-full rounded-t-full overflow-hidden bg-stone-200">
+                          <PlaceholderImg label="Great-Grandfather" isNightMode={isNightMode} />
+                      </div>
+                  </div>
+                  <div className="w-full md:w-1/2">
+                      <h4 className={`text-2xl font-bold mb-4 ${isNightMode ? 'text-white' : 'text-[#451a03]'}`}>Lineage</h4>
+                      <p className="text-sm leading-loose opacity-80">{t.cardLineageText}</p>
+                  </div>
+              </div>
+
+              {/* CARD 3: DUAL LIFE (FINANCE) */}
+              <div className={`min-w-[85vw] md:min-w-[600px] snap-center p-8 rounded-3xl border flex flex-col md:flex-row gap-8 items-center shadow-lg ${isNightMode ? 'bg-slate-900 border-blue-900/30' : 'bg-slate-50 border-slate-200'}`}>
+                  <div className="w-full md:w-1/2 aspect-video relative rounded-lg overflow-hidden shadow-md border-2 border-slate-200/20">
+                      <PlaceholderImg label="Finance Workplace" isNightMode={isNightMode} customIcon={<Briefcase size={32} />} />
+                  </div>
+                  <div className="w-full md:w-1/2">
+                      <div className="flex items-center gap-2 mb-2">
+                          <Briefcase size={16} className={isNightMode ? 'text-blue-400' : 'text-slate-500'} />
+                          <span className={`text-xs font-bold uppercase tracking-widest ${isNightMode ? 'text-blue-400' : 'text-slate-500'}`}>Professional Life</span>
+                      </div>
+                      <h4 className={`text-2xl font-base-en mb-4 ${isNightMode ? 'text-white' : 'text-slate-800'}`}>Dual Life</h4>
+                      <p className={`text-lg italic leading-relaxed mb-4 ${isNightMode ? 'text-slate-300' : 'text-slate-600'}`}>"{t.cardPhilosophyText}"</p>
+                  </div>
+              </div>
+
+              {/* Spacer for scroll padding */}
+              <div className="min-w-[20px]"></div>
+           </div>
+        </div>
+
       </section>
 
       <MotifSeparator isNightMode={isNightMode} />
