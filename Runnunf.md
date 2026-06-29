@@ -92,6 +92,11 @@ In about 1-2 minutes, refresh that Settings page. You will see a bar at the top 
 > "Your site is live at [https://yourusername.github.io/your-repo-name/](https://www.google.com/search?q=https://yourusername.github.io/your-repo-name/)"
 
 Update:
+
+
+https://docs.google.com/spreadsheets/d/1P6r04LmQAfBhajoOXqOeuDjpZ08VOC_GZmKIPIQkPAI/edit?gid=929722056#gid=929722056
+
+
 https://www.npoint.io/docs/351d4f48fd1c2ad3df3b
 https://api.npoint.io/41fc51fce7343b4e45e1
 
