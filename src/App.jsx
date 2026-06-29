@@ -48,11 +48,11 @@ const tableToRows = (table) => {
 // --- MOCK DATA FOR PREVIEW (Ensures UI looks good even if API fails) ---
 const INITIAL_DATA = {
   // --- Content fields (owner edits these in npoint) ---
-  name: "Aishwarya Mahesh",
+  name: "Aishwarya Mahesh", 
   tagline: "Investment Strategist & Carnatic Vocalist.",
   shortIntro: "I am a 24-year-old investment strategist at ithought Financial Consulting LLP and an aspiring Carnatic vocalist, deeply rooted in tradition.",
   quote: "Music is not just an art, it is a way of life; it does not always have to have structure, let it flow!",
-  desc: "Aishwarya Mahesh balances a dynamic professional career in finance with continual learning and creative expression in Carnatic music.",
+  desc: "Aishwarya Mahesh balances a professional career in finance with continual learning and creative expression in Carnatic music.",
   aboutTitle: "My Musical Journey",
   bioBlock1: "Born into a family steeped in Carnatic tradition, music has been part of my life since childhood. My great-grandfather was the mridangam maestro Shri Thanjavur Vaidyanatha Iyer, and I am also related to the composer Shri Maha Vaidyanatha Sivan. These roots, together with disciplined tutelage, deeply shape my interests as a performing artist.",
   bioBlock2Title: "Training",
@@ -88,16 +88,18 @@ const INITIAL_DATA = {
 };
 
 // --- IMAGE COLLECTIONS FOR SLIDESHOWS ---
+const BASE = import.meta.env.BASE_URL;
+
 const LINEAGE_IMAGES = [
-  "src/assets/lineage1.png",
-  "src/assets/lineage2.png",
-  "src/assets/lineage3.png",
+  `${BASE}assets/lineage1.png`,
+  `${BASE}assets/lineage2.png`,
+  `${BASE}assets/lineage3.png`,
 ];
 
 const MASTERY_IMAGES = [
-  "src/assets/mastery1.png",
-  "src/assets/mastery2.png",
-  "src/assets/mastery3.png",
+  `${BASE}assets/mastery1.png`,
+  `${BASE}assets/mastery2.png`,
+  `${BASE}assets/mastery3.png`,
 ];
 
 // --- FONTS & STYLES ---
@@ -428,7 +430,7 @@ const App = () => {
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   
   // Changed default to a remote URL for preview
-  const [portraitImage, setPortraitImage] = useState('src/assets/portrait.png');
+  const [portraitImage, setPortraitImage] = useState(`${BASE}assets/portrait.png`);
   const [imageError, setImageError] = useState(false);
 
   const [data, setData] = useState(INITIAL_DATA);
@@ -485,7 +487,7 @@ const App = () => {
   const scrollTo = (id) => { setIsMenuOpen(false); setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }), 500); };
 
   const handleImageError = () => {
-      setPortraitImage('src/assets/portrait.png');
+      setPortraitImage(`${BASE}assets/portrait.png`);
   };
 
   const today = new Date(); today.setHours(0, 0, 0, 0);
@@ -519,7 +521,7 @@ const App = () => {
           <span onClick={() => scrollTo('home')} className={`text-xl tracking-[0.2em] font-base-${lang} font-bold cursor-pointer uppercase`}>AISHWARYA<span className="text-[#D97706]">.</span></span>
           
           <div className="hidden lg:flex items-center gap-12 absolute left-1/2 transform -translate-x-1/2">
-             {['events', 'about', 'music', 'contact'].map((item) => (
+             {['about', 'events', 'music', 'contact'].map((item) => (
                <button 
                  key={item} 
                  onClick={() => scrollTo(item)} 
@@ -598,7 +600,7 @@ const App = () => {
            <button onClick={() => setIsMenuOpen(false)} className="absolute top-8 right-8 text-[#D97706] z-[70] cursor-pointer hover:rotate-90 transition-transform"><X size={36} /></button>
            
            <div className="text-center space-y-6 w-full px-8">
-            {['events', 'about', 'music', 'contact'].map(item => <button key={item} onClick={() => scrollTo(item)} className={`block w-full text-4xl sm:text-5xl md:text-7xl font-base-${lang} text-[#FEF3C7] hover:text-[#D97706] capitalize transition-colors`}>{content[item]}</button>)}
+            {['about', 'events', 'music', 'contact'].map(item => <button key={item} onClick={() => scrollTo(item)} className={`block w-full text-4xl sm:text-5xl md:text-7xl font-base-${lang} text-[#FEF3C7] hover:text-[#D97706] capitalize transition-colors`}>{content[item]}</button>)}
           </div>
 
           <div className="flex flex-col items-center gap-6 mt-16">
@@ -649,30 +651,13 @@ const App = () => {
       </section>
 
       <section className={`py-24 px-6 border-y ${isNightMode ? 'bg-[#0F172A] border-[#1E293B]' : 'bg-[#FFF7ED] border-[#FED7AA]'}`}>
-        <div className="max-w-4xl mx-auto text-center relative">
+        <div className="max-w-6xl mx-auto text-center relative">
           <Quote size={40} className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-20 text-[#D97706]" />
-          <h3 className={`text-2xl md:text-3xl font-base-${lang} italic mb-8 leading-relaxed font-light`}>"{content.quote}"</h3>
+          <h3 className={`text-xl md:text-2xl lg:text-3xl font-base-${lang} italic mb-8 leading-relaxed font-light`}>"{content.quote}"</h3>
           <div className="flex justify-center"><svg width="60" height="20" viewBox="0 0 60 20" stroke="#D97706"><path d="M0 10 L 60 10" fill="none" strokeWidth="1" /></svg></div>
         </div>
       </section>
 
-      <section id="events" className={`py-32 overflow-hidden ${isNightMode ? 'bg-[#020617]' : 'bg-[#292524] text-[#FDFBF7]'}`}>
-        <div className="px-6 md:px-12 mb-16 flex items-baseline gap-4"><h2 className="text-4xl md:text-5xl text-white">{content.performances}</h2><div className="h-px bg-white/20 flex-grow"></div></div>
-        <div className="flex overflow-x-auto gap-8 px-6 md:px-12 pb-12 snap-x hide-scrollbar">
-          {data.events.map((event, i) => (
-            <a key={i} href={event.link} target="_blank" rel="noreferrer" className="min-w-[350px] snap-center p-8 border border-white/10 rounded-2xl hover:border-[#D97706] hover:bg-white/5 block group">
-              <div className="text-base font-semibold text-[#D97706] mb-4">{event.date}</div>
-              <div className="text-2xl md:text-3xl font-bold mb-2 text-white group-hover:text-orange-200">{event.venue}</div>
-              <div className="flex items-center gap-2 text-sm text-stone-400 uppercase mb-8"><MapPin size={12} /> {event.loc}</div>
-              <div className="w-full h-px bg-white/10 group-hover:bg-[#D97706]/50 transition-all"></div>
-              <div className="pt-4 text-xs uppercase opacity-0 group-hover:opacity-100 transition-opacity text-white">{content.details}</div>
-            </a>
-          ))}
-          <div className="min-w-[100px]"></div>
-        </div>
-      </section>
-
-      {}
       <section id="about" className="py-12 px-6 md:px-12 max-w-7xl mx-auto space-y-16">
         
         {/* ROW 1: INTRODUCTION */}
@@ -731,6 +716,22 @@ const App = () => {
 
       </section>
 
+      <section id="events" className={`py-32 overflow-hidden ${isNightMode ? 'bg-[#020617]' : 'bg-[#292524] text-[#FDFBF7]'}`}>
+        <div className="px-6 md:px-12 mb-16 flex items-baseline gap-4"><h2 className="text-4xl md:text-5xl text-white">{content.performances}</h2><div className="h-px bg-white/20 flex-grow"></div></div>
+        <div className="flex overflow-x-auto gap-8 px-6 md:px-12 pb-12 snap-x hide-scrollbar">
+          {data.events.map((event, i) => (
+            <a key={i} href={event.link} target="_blank" rel="noreferrer" className="min-w-[350px] snap-center p-8 border border-white/10 rounded-2xl hover:border-[#D97706] hover:bg-white/5 block group">
+              <div className="text-base font-semibold text-[#D97706] mb-4">{event.date}</div>
+              <div className="text-2xl md:text-3xl font-bold mb-2 text-white group-hover:text-orange-200">{event.venue}</div>
+              <div className="flex items-center gap-2 text-sm text-stone-400 uppercase mb-8"><MapPin size={12} /> {event.loc}</div>
+              <div className="w-full h-px bg-white/10 group-hover:bg-[#D97706]/50 transition-all"></div>
+              <div className="pt-4 text-xs uppercase opacity-0 group-hover:opacity-100 transition-opacity text-white">{content.details}</div>
+            </a>
+          ))}
+          <div className="min-w-[100px]"></div>
+        </div>
+      </section>
+
       <MotifSeparator isNightMode={isNightMode} />
 
       {}
@@ -786,7 +787,7 @@ const App = () => {
               {data.contact.phone && <a href={`tel:${data.contact.phone.replace(/\s+/g, '')}`} className="text-[#D97706] hover:text-white text-lg transition-colors">{data.contact.phone}</a>}
             </div>
           </div>
-          <div><h4 className="text-white text-xs font-bold uppercase mb-6">{content.explore}</h4><ul className="space-y-4 text-sm">{['events', 'about', 'music'].map(item => <li key={item}><button onClick={() => scrollTo(item)} className="hover:text-[#D97706] transition-colors capitalize">{content[item]}</button></li>)}</ul></div>
+          <div><h4 className="text-white text-xs font-bold uppercase mb-6">{content.explore}</h4><ul className="space-y-4 text-sm">{['about', 'events', 'music'].map(item => <li key={item}><button onClick={() => scrollTo(item)} className="hover:text-[#D97706] transition-colors capitalize">{content[item]}</button></li>)}</ul></div>
           <div><h4 className="text-white text-xs font-bold uppercase mb-6">{content.connect}</h4><ul className="space-y-4 text-sm"><li><a href={data.contact.instagram} target="_blank" className="hover:text-[#D97706] transition-colors">Instagram</a></li><li><a href={data.contact.youtube} target="_blank" className="hover:text-[#D97706] transition-colors">YouTube</a></li><li><a href={data.contact.facebook} target="_blank" className="hover:text-[#D97706] transition-colors">Facebook</a></li></ul></div>
         </div>
         <div className="max-w-6xl mx-auto mt-24 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-xs uppercase tracking-widest">
